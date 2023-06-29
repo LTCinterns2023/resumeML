@@ -81,8 +81,8 @@ class Model:
 
             resumes["title"].append(resume)
             resumes["resume"].append(resumeContent)
+
         self.df = pd.DataFrame(resumes)
-        print(self.df)
 
     def _preprocessResume(self):
         # Clean Resumes
@@ -172,7 +172,7 @@ class Model:
 
     def initializeResumes(self, df=False):
         try:
-            if str(type(df)) == "bool":
+            if str(type(df)) != "bool":
                 self._loadResumes()
             else:
                 self.df = df
@@ -203,19 +203,29 @@ class Model:
 
     def getGraphs(self, preds, save=False, show=False):
         for resumeName, pred in preds.items():
+            plt.figure(figsize=(20, 6))
             sns.barplot(x=list(pred.values()), y=list(pred.keys()), orient="h")
             plt.xlabel("Percent Fit (%)")
             plt.ylabel("Job Description")
             plt.title(resumeName)
+            plt.savefig(f"savedFigures/{resumeName[:-4]}.svg") if save else None
             plt.show() if show else None
-            plt.savefig(f"savedFigures/{resumeName}.svg") if save else None
 
-    def rank(self, preds, jobs):
-        pass
+    def rank(self, preds, job):
+        returnList = []
+        for resumeName, pred in preds.items():
+            returnList.append({
+                "name": resumeName,
+                "percent": pred[job],
+                "resumePath": self.resumePath + "/" + resumeName,
+                "graphPath": os.getcwd() + f"/savedFigures/{resumeName[:-4]}.svg"
+            })
+        return sorted(returnList, key=lambda x: x["percent"], reverse=True)
 
 
 if __name__ == "__main__":
     model = Model()
     model.initializeResumes()
     predictions = model.getPredictions()
-    model.getGraphs(predictions, show=True)
+    #model.getGraphs(predictions, show=True, save=True)
+    print(model.rank(predictions, "Database"))

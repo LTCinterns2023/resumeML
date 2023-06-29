@@ -1,8 +1,11 @@
+import os
 import random
 
-from flask import Flask, request, send_file, Response
+from flask import Flask
 from flask_cors import CORS
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource
+
+from ..model.model import Model
 
 # FLASK API
 app = Flask(__name__)
@@ -13,15 +16,20 @@ number = random.randint(1, 10)
 print(number)
 
 
-class Model(Resource):
-    def get(self, guessNumber):
-        global number
-        if guessNumber != number:
-            return {"testing": "Fail"}
-        return {"testing": "Success"}
+class RankModel(Resource):
+    def get(self, path, job):
+        if not os.path.exists(path):
+            return 404, {"response": "Path Specified Does Not Exist"}
+
+        # Getting Model Data
+        model = Model()
+        model.initializeResumes()
+        predictions = model.getPredictions()
+        model.getGraphs(predictions, show=True, save=True)
+        return model.rank(predictions, job)
 
 
-api.add_resource(Model, "/model/<int:guessNumber>")
+api.add_resource(RankModel, "/model/<string:path>/<string:job>")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)

@@ -1,146 +1,236 @@
-import "./ResumeSortingWebsite.css";
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Result from "./components/Result";
 
-const ResumeSortingWebsite = () => {
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [location, setLocation] = useState("");
-  const [experienceFilter, setExperienceFilter] = useState("");
-  const [companyFilter, setCompanyFilter] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("");
-  const [educationFilter, setEducationFilter] = useState("");
-  const [languageFilter, setLanguageFilter] = useState("");
+function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [rank, setRank] = useState([1, 2 , 3, 4, 5,]);
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    setUploadedFile(file);
-  };
-
-  const handleLocationSearch = (event) => {
-    setLocation(event.target.value);
-  };
-
-  const handleExperienceFilter = (event) => {
-    setExperienceFilter(event.target.value);
-  };
-
-  const handleCompanyFilter = (event) => {
-    setCompanyFilter(event.target.value);
-  };
-
-  const handleCategoryFilter = (event) => {
-    setCategoryFilter(event.target.value);
-  };
-
-  const handleEducationFilter = (event) => {
-    setEducationFilter(event.target.value);
-  };
-
-  const handleLanguageFilter = (event) => {
-    setLanguageFilter(event.target.value);
+  const handleInputChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   const handleSearch = () => {
-    // Perform the search based on the selected filters
-    // You can implement the logic to search the resumes using the uploadedFile, location, filters, etc.
-    console.log("Searching resumes...");
+    // Implement your search logic here
+    console.log('Search query:', searchQuery);
   };
 
-  const url = "http://0.0.0.0:3000/";
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
-  const handleAPI = (event) => {
-    return fetch(url + "model/3", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        return data;
-      })
-      .catch((error) => console.error(error));
+  const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
+  const [selectedExperience, setSelectedExperience] = useState([]);
+
+  const [skillFilterOpen, setSkillFilterOpen] = useState(false);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const [languageFilterOpen, setLanguageFilterOpen] = useState(false);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+  const toggleExperienceFilter = () => {
+    setExperienceFilterOpen(!experienceFilterOpen);
+  };
+
+  const toggleSkillFilter = () => {
+    setSkillFilterOpen(!skillFilterOpen);
+  };
+
+  const toggleLanguageFilter = () => {
+    setLanguageFilterOpen(!languageFilterOpen);
+  };
+
+  const handleExperienceChange = (event) => {
+    const { value } = event.target;
+    setSelectedExperience((prevSelectedExperience) => {
+      if (prevSelectedExperience.includes(value)) {
+        return prevSelectedExperience.filter((experience) => experience !== value);
+      } else {
+        return [...prevSelectedExperience, value];
+      }
+    });
+  };
+
+  const handleSkillChange = (event) => {
+    const { value } = event.target;
+    setSelectedSkills((prevSelectedSkills) => {
+      if (prevSelectedSkills.includes(value)) {
+        return prevSelectedSkills.filter((skill) => skill !== value);
+      } else {
+        return [...prevSelectedSkills, value];
+      }
+    });
+  };
+
+  const handleLanguageChange = (event) => {
+    const { value } = event.target;
+    setSelectedLanguages((prevSelectedLanguages) => {
+      if (prevSelectedLanguages.includes(value)) {
+        return prevSelectedLanguages.filter((lang) => lang !== value);
+      } else {
+        return [...prevSelectedLanguages, value];
+      }
+    });
   };
 
   return (
-    <div className="container">
-      <h1>Resume Sorting Website</h1>
-      <div className="form-group">
-        <label htmlFor="fileUpload">Upload Resume:</label>
-        <input
-          type="file"
-          id="fileUpload"
-          accept=".pdf,.doc,.docx"
-          onChange={handleFileUpload}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="locationSearch">Location:</label>
-        <input
-          type="text"
-          id="locationSearch"
-          value={location}
-          onChange={handleLocationSearch}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="experienceFilter">Experience:</label>
-        <input
-          type="text"
-          id="experienceFilter"
-          value={experienceFilter}
-          onChange={handleExperienceFilter}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="companyFilter">Company:</label>
-        <input
-          type="text"
-          id="companyFilter"
-          value={companyFilter}
-          onChange={handleCompanyFilter}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="categoryFilter">Category:</label>
-        <input
-          type="text"
-          id="categoryFilter"
-          value={categoryFilter}
-          onChange={handleCategoryFilter}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="educationFilter">Education:</label>
-        <input
-          type="text"
-          id="educationFilter"
-          value={educationFilter}
-          onChange={handleEducationFilter}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="languageFilter">Language:</label>
-        <input
-          type="text"
-          id="languageFilter"
-          value={languageFilter}
-          onChange={handleLanguageFilter}
-        />
-      </div>
+    <div className="App">
+      <header>
+        <h1>Resume Selector</h1>
 
-      <div className="form-group">
-        <label htmlFor="languageFilter">Insert Test:</label>
-        <input
-          type="text"
-          id="languageFilter"
-          value={languageFilter}
-          onChange={handleLanguageFilter}
-        />
-      </div>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Enter keywords..."
+            value={searchQuery}
+            onChange={handleInputChange}
+            className="search-input"
+          />
+          <button onClick={handleSearch} className="search-button">Search</button>
+        </div>
 
-      <button className="search-button" onClick={handleAPI}>
-        Connect To API Server
-      </button>
+        <div>
+          <input type="file"/>
+          <button className="upload-button">Upload</button>
+        </div>
+
+      </header>
+
+      <main>
+        <aside className="sidebar">
+          <h2>Filters</h2>
+          <div className="filter">
+            <label onClick={toggleExperienceFilter} className="filter-label">
+              Experience
+            </label>
+            {experienceFilterOpen && (
+              <div className="filter-options">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Junior"
+                    checked={selectedExperience.includes('Junior')}
+                    onChange={handleExperienceChange}
+                  />
+                  Junior
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Senior"
+                    checked={selectedExperience.includes('Senior')}
+                    onChange={handleExperienceChange}
+                  />
+                  Senior
+                </label>
+              </div>
+            )}
+            <br></br>
+            <label onClick={toggleSkillFilter} className="filter-label">
+              Skills
+            </label>
+            {skillFilterOpen && (
+              <div className="filter-options">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="C/C++"
+                    checked={selectedSkills.includes('C/C++')}
+                    onChange={handleSkillChange}
+                  />
+                  C/C++
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Python"
+                    checked={selectedSkills.includes('Python')}
+                    onChange={handleSkillChange}
+                  />
+                  Python
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="JavaScript"
+                    checked={selectedSkills.includes('JavaScript')}
+                    onChange={handleSkillChange}
+                  />
+                  JavaScript
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="React"
+                    checked={selectedSkills.includes('React')}
+                    onChange={handleSkillChange}
+                  />
+                  React
+                </label>
+              </div>
+            )}
+            <br></br>
+            <label onClick={toggleLanguageFilter} className="filter-label">
+              Language
+            </label>
+            {languageFilterOpen && (
+              <div className="filter-options">
+                <label>
+                  <input
+                    type="checkbox"
+                    value="English"
+                    checked={selectedLanguages.includes('English')}
+                    onChange={handleLanguageChange}
+                  />
+                  English
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="French"
+                    checked={selectedLanguages.includes('French')}
+                    onChange={handleLanguageChange}
+                  />
+                  French
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Korean"
+                    checked={selectedLanguages.includes('Korean')}
+                    onChange={handleLanguageChange}
+                  />
+                  Korean
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Chinese"
+                    checked={selectedLanguages.includes('Chinese')}
+                    onChange={handleLanguageChange}
+                  />
+                  Chinese
+                </label>
+              </div>
+            )}
+          </div>
+          <br></br>
+          {/* Other filters */}
+        </aside>
+        <section className="content">
+          {rank.map((index, items) => {
+            <Result/>
+          })}      
+        </section>
+      </main>
+      <footer>
+        {/* Footer content */}
+      </footer>
     </div>
   );
-};
+}
 
-export default ResumeSortingWebsite;
+export default App;
