@@ -1,9 +1,11 @@
 # To-do List
-1. Host a website (possibly on Github)
-2. Create a database (SQL is suggested by the backend team)
-3. Make containers in <body> for showcasing applicants' info
-5. Develop a search machine (filter texts in resumes)
-6. Apply the API of AI into a ranking system
+~~1. Host a website (possibly on Github)~~
+2. Change icon/title
+3. Components
+4. Create a database (SQL is suggested by the backend team)
+5. Make containers in <body> for showcasing applicants' info
+6. Develop a search machine (filter texts in resumes)
+7. Apply the API of AI into a ranking system
 
 
 ## Getting Started with Create React App
