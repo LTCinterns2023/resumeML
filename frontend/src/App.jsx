@@ -15,7 +15,6 @@ import {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [rank, setRank] = useState([1, 2, 3, 4, 5,]);
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -24,12 +23,6 @@ function App() {
   const handleSearch = () => {
     // Implement your search logic here
     console.log('Search query:', searchQuery);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
   };
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
