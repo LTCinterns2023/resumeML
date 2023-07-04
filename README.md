@@ -1,5 +1,5 @@
 # To-do List
-~~1. Host a website (possibly on Github)~~
+- [] Host a website (possibly on Github)
 2. Change icon/title
 3. Components
 4. Create a database (SQL is suggested by the backend team)
