@@ -5,7 +5,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api, Resource
 
-from ..model.model import Model
+from backend.model.model import Model
 
 # FLASK API
 app = Flask(__name__)
