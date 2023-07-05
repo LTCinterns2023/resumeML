@@ -1,5 +1,14 @@
-# Getting Started with Create React App
+# To-do List
+- [ ] Host a website (possibly on Github)
+- [ ] Change icon/title
+- [ ] Components
+- [ ] Create a database (SQL is suggested by the backend team)
+- [ ] Make containers in <body> for showcasing applicants' info
+- [ ] Develop a search machine (filter texts in resumes)
+- [ ] Apply the API of AI to a ranking system
 
+
+## Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

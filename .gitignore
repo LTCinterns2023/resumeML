@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -162,3 +163,10 @@ wordEmbeding.d2v.vectors.npy
 
 my_dir/helloWorld
 testResumes
+=======
+**/package-lock.json
+.DS_Store
+.vscode/
+.idea/
+.build/
+>>>>>>> 2d3f9cd8c9a7584094258548f3de1404ca3e3c94
