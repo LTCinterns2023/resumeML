@@ -11,7 +11,9 @@ This will run both the React frontend server and the Flask backend server. It wi
 You may need to run this file twice. Running it the first time may result in a long delay since packages are installing in the background. Expect roughly ~5 mins. After running it for the first time, please activate the virtual env (you should see a popup in the bottom right corner in VS Code asking you to configure a virtual environment).
 
 After this install, you should see:
-(.venv) PS C:\User\GitHub\resumeML
+```console
+(.venv) PS C:\User\path\to\GitHub\resumeML\
+```
 in your terminal. This means you have configured the virtual environment correctly and can now run `node cli.js` again to start up the servers.
 
 ## Troubleshooting With cli.js
