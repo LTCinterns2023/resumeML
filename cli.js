@@ -1,26 +1,76 @@
-const { exec } = require('child_process');
-const path = require('path');
+const { exec } = require("child_process");
+const fs = require("fs");
+const os = require("os");
 
-// Function to start Flask server
-function startFlaskServer() {
-  const pythonScriptPath = path.join(__dirname, 'backend', 'API', 'app.py');
-  exec(`python -m ${pythonScriptPath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Flask server error: ${error}`);
+// Create Venv
+function createVenv() {
+  return new Promise((resolve, reject) => {
+    const pwd = fs.readdirSync(process.cwd());
+    
+    if (!(pwd.includes(".venv"))) {
+      console.log("downloading all prerequites for backend server")
+      exec(
+        `python -m venv .venv && pip install -r requirements.txt`,
+        (error, stdout, stderr) => {
+          if (error) {
+            console.log(`Creating Virtual Env Failed: ${error}`);
+            reject(error);
+          } else {
+            console.log(`Venv Created Successfully`);
+            resolve();
+          }
+        }
+      );
     } else {
-      console.log(`Flask server running`);
+      console.log(
+        "Venv Already Created | Dependencies For Python Already Installed"
+      );
+      resolve();
     }
   });
 }
 
+// Function to start Flask server
+async function startFlaskServer() {
+  // Create Venv
+  await createVenv();
+
+  // Activate Venv
+  let venvCmd;
+  if (os.platform() === "win32") {
+    venvCmd = `.venv\\Scripts\\activate`;
+  } else {
+    venvCmd = `source .venv/bin/activate`;
+  }
+
+  // Running Flask
+  exec(
+    `flask run`, { cwd: "backend/API" },
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Flask server error: ${error}`);
+      } else {
+        console.log(`Flask server running ${stdout}`);
+      }
+    }
+  );
+}
+
 // Function to start React server
 function startReactServer() {
-  exec('npm start', { cwd: 'frontend' }, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`React server error: ${error}`);
-    } else {
-      console.log(`React server running`);
-    }
+  const reactProcess = exec("npm i && npm start", { cwd: "frontend" });
+
+  // Log the output and error streams
+  reactProcess.stdout.on("data", (data) => {
+    console.log(data);
+  });
+
+  reactProcess.stderr.on("data", (data) => {
+    console.error(data);
+  });
+
+  reactProcess.on("exit", (code) => {
+    console.log(`React server process exited with code ${code}`);
   });
 }
 
@@ -31,3 +81,4 @@ function startServers() {
 }
 
 startServers();
+console.log('\x1b[35m%s\x1b[0m', "To Test If Backend API is running go to http://127.0.0.1:5000");

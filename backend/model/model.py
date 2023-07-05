@@ -53,7 +53,7 @@ CATG_TO_GROUP = {
 
 
 class Model:
-    def __init__(self, resumePath="testResumes", modelPath="model.h5"):
+    def __init__(self, resumePath="resumes", modelPath="model.h5"):
         print(os.getcwd())
         try:
             self.model = keras.models.load_model(modelPath)

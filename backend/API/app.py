@@ -1,7 +1,7 @@
 import os
 import random
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api, Resource
 
@@ -15,6 +15,9 @@ api = Api(app)
 number = random.randint(1, 10)
 print(number)
 
+@app.route("/")
+def testHomePage():
+    return {"message": "API working"}
 
 class RankModel(Resource):
     def get(self, path, job):
