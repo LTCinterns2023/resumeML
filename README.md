@@ -38,7 +38,7 @@ Once you reach the section in your IDE which asks you to configure your interpre
 If this doesn't work, manually activate your virtual environment by running:
 
 - On MacOS: `source .venv/bin/activate`
-- On Windows: `cd .venv/Scripts` then `.\activate.ps1`
+- On Windows: `cd .venv/Scripts/activate.ps1`
 
 in your ResumeML working directory.
 
