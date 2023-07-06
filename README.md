@@ -2,6 +2,26 @@
 
 Welcome to the ResumeML repository, please take a look at [/backend](https://github.com/LTCinterns2023/resumeML/tree/main/frontend) and [/frontend](https://github.com/LTCinterns2023/resumeML/tree/main/backend)
 
+# To-do List for Frontend
+- [x] Host a website (possibly on Github) - Suyeon
+- [ ] Change icon/title - Namira
+- [x] Components - Suyeon
+- [ ] Font & Style (css) - Ruth
+- [ ] "Rank by" button - Mai
+- [ ] "Upload" button - Mai
+- [ ] "Location" search bar - Namirawsa
+- [ ] Make containers in <main> for showcasing applicants' info - Eshaal, Suyeon
+- [ ] Develop a search machine (filter texts in resumes) - Ruth, Suyeon
+- [ ] Connect everything to the backend
+- [ ] Apply the API of AI to a ranking system
+
+# To-do List for Backend
+- [ ] Add: Instructions for the backend
+- [ ] Connect frontend and backend
+
+...
+
+
 ## Using cli.js
 
 To run both the front and back end servers, please run: 
@@ -47,10 +67,5 @@ in your ResumeML working directory.
 If you have missing packages, first activate your virtual environment (either automatically in VS Code or manually as described above), then run:
 `pip install -r requirements.txt` in your ResumeML working directory. (Try `pip3` if this doesn't work)
 
-# To-do List
 
-- [ ] Add: Instructions for the backend
-- [ ] Connect frontend and backend
-
-...
 
