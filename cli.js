@@ -10,12 +10,13 @@ function createVenv() {
     if (!(pwd.includes(".venv"))) {
       console.log("downloading all prerequites for backend server")
       exec(
-        `python -m venv .venv && pip install -r requirements.txt`,
+        `python3 -m venv .venv && pip3 install -r "requirements.txt"`,
         (error, stdout, stderr) => {
           if (error) {
             console.log(`Creating Virtual Env Failed: ${error}`);
             reject(error);
           } else {
+            console.log(`${stdout}`)
             console.log(`Venv Created Successfully`);
             resolve();
           }
