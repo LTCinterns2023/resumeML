@@ -8,9 +8,9 @@ Welcome to the ResumeML repository, please take a look at [/backend](https://git
 - [x] Components - Suyeon
 - [ ] Font & Style (css) - Ruth
 - [ ] "Rank by" button - Mai
-- [ ] "Upload" button - Mai
+- [x] "Upload" button - Mai
 - [ ] "Location" search bar - Namirawsa
-- [ ] Make containers in <main> for showcasing applicants' info - Eshaal, Suyeon
+- [x] Make containers in <main> for showcasing applicants' info - Eshaal, Suyeon, Ruth
 - [ ] Develop a search machine (filter texts in resumes) - Ruth, Suyeon
 - [ ] Connect everything to the backend
 - [ ] Apply the API of AI to a ranking system
