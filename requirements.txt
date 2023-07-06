@@ -4,7 +4,6 @@ flask_restful==0.3.10
 gensim==4.3.1
 matplotlib==3.7.1
 nltk==3.8.1
-numpy==1.25.0
 pandas==2.0.3
 PyPDF2==3.0.1
 seaborn==0.12.2

@@ -5,7 +5,7 @@ import sys
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api, Resource
-from model.model import Model
+from model import Model
 
 # FLASK API
 app = Flask(__name__)
@@ -33,6 +33,4 @@ class RankModel(Resource):
 
 
 api.add_resource(RankModel, "/model/<string:path>/<string:job>")
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+app.run(host="0.0.0.0", port=49152)

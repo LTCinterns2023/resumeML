@@ -48,7 +48,7 @@ async function startFlaskServer() {
 
   // Running Flask
   exec(
-    `python app.py`, { cwd: "backend/" },
+    `python app.py`, { cwd: "backend" },
     (error, stdout, stderr) => {
       if (error) {
         console.error(`Flask server error: ${error}`);
@@ -84,4 +84,4 @@ function startServers() {
 }
 
 startServers();
-console.log('\x1b[35m%s\x1b[0m', "To Test If Backend API is running go to http://127.0.0.1:5000");
+console.log('\x1b[35m%s\x1b[0m', "To Test If Backend API is running go to http://127.0.0.1:49152");
