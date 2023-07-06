@@ -3,14 +3,16 @@ const fs = require("fs");
 const os = require("os");
 
 // Create Venv
-function createVenv() {
+function createVenv(venvCmd) {
   return new Promise((resolve, reject) => {
     const pwd = fs.readdirSync(process.cwd());
     
     if (!(pwd.includes(".venv"))) {
       console.log("downloading all prerequites for backend server")
       exec(
-        `python -m venv .venv && pip install -r "requirements.txt" && pip install flask && pip install flask_cors && pip install flask_restful`,
+        `python -m venv .venv && 
+        ${venvCmd} &&
+        pip install -r requirements.txt `,
         (error, stdout, stderr) => {
           if (error) {
             console.log(`Creating Virtual Env Failed: ${error}`);
@@ -33,9 +35,6 @@ function createVenv() {
 
 // Function to start Flask server
 async function startFlaskServer() {
-  // Create Venv
-  await createVenv();
-
   // Activate Venv
   let venvCmd;
   if (os.platform() === "win32") {
@@ -44,9 +43,12 @@ async function startFlaskServer() {
     venvCmd = `source .venv/bin/activate`;
   }
 
+  // Create Venv
+  await createVenv(venvCmd);
+
   // Running Flask
   exec(
-    `python app.py`, { cwd: "backend/API" },
+    `python app.py`, { cwd: "backend/" },
     (error, stdout, stderr) => {
       if (error) {
         console.error(`Flask server error: ${error}`);

@@ -1,11 +1,11 @@
 import os
 import random
+import sys
 
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api, Resource
-
-from backend.model.model import Model
+from model.model import Model
 
 # FLASK API
 app = Flask(__name__)
