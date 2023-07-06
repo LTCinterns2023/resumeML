@@ -10,7 +10,7 @@ function createVenv() {
     if (!(pwd.includes(".venv"))) {
       console.log("downloading all prerequites for backend server")
       exec(
-        `python -m venv .venv && pip install -r requirements.txt`,
+        `python -m venv .venv && pip install -r "requirements.txt"`,
         (error, stdout, stderr) => {
           if (error) {
             console.log(`Creating Virtual Env Failed: ${error}`);
@@ -45,7 +45,7 @@ async function startFlaskServer() {
 
   // Running Flask
   exec(
-    `flask run`, { cwd: "backend/API" },
+    `python app.py`, { cwd: "backend/API" },
     (error, stdout, stderr) => {
       if (error) {
         console.error(`Flask server error: ${error}`);
