@@ -13,6 +13,7 @@ import {
   handleEducationChange
 } from './Functions';
 
+
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,6 +25,13 @@ function App() {
     // Implement your search logic here
     console.log('Search query:', searchQuery);
   };
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
@@ -37,12 +45,14 @@ function App() {
   const [educationFilterOpen, setEducationFilterOpen] = useState(false);
   const [selectedEducation, setSelectedEducation] = useState([]);
 
+
   return (
     <div className="App">
       <header>
         <h1>Resume Selector</h1>
 
         <div className="search-bar">
+          <div className='textplace'>
           <input
             type="text"
             placeholder="Enter keywords..."
@@ -50,7 +60,14 @@ function App() {
             onChange={handleInputChange}
             className="search-input"
           />
+          <input type="file" onChange={handleFileSelect} />
+          </div>
+
+          <div className='button'>
           <button onClick={handleSearch} className="search-button">Search</button>
+          <button onClick={() => console.log(selectedFile)} className="search-buttons">Upload</button>
+         </div>
+
         </div>
       </header>
 
@@ -74,6 +91,13 @@ function App() {
           selectedEducation={selectedEducation}
           handleEducationChange={(event) => handleEducationChange(event, selectedEducation, setSelectedEducation)}
         />
+
+        <section className='content'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </section>
 
       </main>
       <footer>
