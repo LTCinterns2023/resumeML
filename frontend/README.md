@@ -7,13 +7,13 @@
 - [ ] "Upload" button - Mai
 - [ ] "Location" search bar - Namirawsa
 - [ ] Make containers in <main> for showcasing applicants' info - Eshaal, Suyeon
-- [ ] Develop a search machine (filter texts in resumes) - Ruth, Suyeon
+- [ ] Develop a search engine (filter texts in resumes) - Burak
 - [ ] Connect everything to the backend
 - [ ] Apply the API of AI to a ranking system
 
 
 ## Getting Started with Create React App
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped witch [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

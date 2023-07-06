@@ -169,3 +169,4 @@ testResumes.zip
 .vscode/
 .idea/
 .build/
+node_modules
