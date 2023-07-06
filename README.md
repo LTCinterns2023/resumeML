@@ -16,8 +16,8 @@ Welcome to the ResumeML repository, please take a look at [/backend](https://git
 
 # To-do List for Backend
 - [x] Add: Instructions for the backend
-- [ ] Word to vectorization
-- [ ] Database
+- [ ] Word to vectorization - Suyeon
+- [ ] Database - Suyeon
 - [ ] Develop a search machine (filter texts in resumes) - Ruth, Suyeon
 
 ...
