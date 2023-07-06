@@ -1,10 +1,14 @@
 # To-do List
-- [ ] Host a website (possibly on Github)
-- [ ] Change icon/title
-- [ ] Components
-- [ ] Create a database (SQL is suggested by the backend team)
-- [ ] Make containers in <body> for showcasing applicants' info
-- [ ] Develop a search machine (filter texts in resumes)
+- [x] Host a website (possibly on Github) - Suyeon
+- [ ] Change icon/title - Namira
+- [x] Components - Suyeon
+- [ ] Font & Style (css) - Ruth
+- [ ] "Rank by" button - Mai
+- [ ] "Upload" button - Mai
+- [ ] "Location" search bar - Namirawsa
+- [ ] Make containers in <main> for showcasing applicants' info - Eshaal, Suyeon
+- [ ] Develop a search machine (filter texts in resumes) - Ruth, Suyeon
+- [ ] Connect everything to the backend
 - [ ] Apply the API of AI to a ranking system
 
 
