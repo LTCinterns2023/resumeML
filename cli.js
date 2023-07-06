@@ -16,6 +16,7 @@ function createVenv() {
             console.log(`Creating Virtual Env Failed: ${error}`);
             reject(error);
           } else {
+            console.log(`${stdout}`)
             console.log(`Venv Created Successfully`);
             resolve();
           }
