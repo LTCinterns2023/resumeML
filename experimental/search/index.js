@@ -17,7 +17,15 @@
 
 
 import { log } from "console";
-import j from "./data/dataset3-beautify.json" assert { type: 'json' }
+import conf from "./conf.json" assert { type: 'json'}
+
+const { default: j } = await import(conf.path, {
+  assert: {
+    type: "json",
+  },
+})
+
+//import j from "./data/dataset3-beautify.json" assert { type: 'json' }
 
 //console.log(j[0].annotation[0].points);
 
