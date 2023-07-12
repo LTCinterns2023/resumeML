@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Result from "./components/Result";
-import SideBar from "./SideBar";
+import SideBar from "./components/SideBar";
 import {
   toggleExperienceFilter,
   toggleSkillFilter,
