@@ -26,7 +26,7 @@ function SideBar({
           Experience
         </label>
         {experienceFilterOpen && (
-          <div className="filter-options">
+          <div className="filter-options animate-slideright">
             <label>
               <input
                 type="checkbox"
@@ -52,7 +52,7 @@ function SideBar({
           Skills
         </label>
         {skillFilterOpen && (
-          <div className="filter-options">
+          <div className="filter-options animate animate-slideright">
             <label>
               <input
                 type="checkbox"
@@ -96,7 +96,7 @@ function SideBar({
           Language
         </label>
         {languageFilterOpen && (
-          <div className="filter-options">
+          <div className="filter-options animate-slideright">
             <label>
               <input
                 type="checkbox"
@@ -140,7 +140,7 @@ function SideBar({
           Education
         </label>
         {educationFilterOpen && (
-          <div className="filter-options">
+          <div className="filter-options animate-slideright">
             <label>
               <input
                 type="checkbox"
