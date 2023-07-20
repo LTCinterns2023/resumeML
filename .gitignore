@@ -163,9 +163,14 @@ wordEmbeding.d2v.vectors.npy
 
 my_dir/helloWorld
 testResumes
+firebase_initialize
 testResumes.zip
 **/package-lock.json
+**/example.txt
+
 .DS_Store
 .vscode/
 .idea/
 .build/
+node_modules
+**ipc-test

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import Result from "./components/Result";
-import SideBar from "./SideBar";
+import ResumeCard from "./components/ResumeCard";
+import SideBar from "./components/SideBar";
 import {
   toggleExperienceFilter,
   toggleSkillFilter,
@@ -12,6 +12,7 @@ import {
   handleLanguageChange,
   handleEducationChange
 } from './Functions';
+
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,9 +33,6 @@ function App() {
     // Implement your search logic here
     console.log('Search query:', searchQuery);
   };
- 
-
-  
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
@@ -48,30 +46,26 @@ function App() {
   const [educationFilterOpen, setEducationFilterOpen] = useState(false);
   const [selectedEducation, setSelectedEducation] = useState([]);
 
+
   return (
     <div className="App">
       <header>
         <h1>Resume Selector</h1>
 
         <div className="search-bar">
+          <div className='textplace'>
           <input
             type="text"
             placeholder="Enter keywords..."
             value={searchQuery}
             onChange={handleInputChange}
             className="search-input"
-          /><div className= "search-upload">
+          />
           <button onClick={handleSearch} className="search-button">Search</button>
-           <button onClick={handleSearch} className="upload-button">Upload</button>
-        <input type="file" onChange={handleUpload} id="choose-file" />
-
-           </div>
-
         </div>
       </header>
 
-      <main>
-
+      <main className='ml-8 mr-8'>
         <SideBar
           experienceFilterOpen={experienceFilterOpen}
           toggleExperienceFilter={() => toggleExperienceFilter(experienceFilterOpen, setExperienceFilterOpen)}
@@ -90,6 +84,16 @@ function App() {
           selectedEducation={selectedEducation}
           handleEducationChange={(event) => handleEducationChange(event, selectedEducation, setSelectedEducation)}
         />
+
+        <section>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+
+        </section>
 
       </main>
       <footer>

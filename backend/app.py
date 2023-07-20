@@ -31,6 +31,11 @@ class RankModel(Resource):
         model.getGraphs(predictions, show=True, save=True)
         return model.rank(predictions, job)
 
+class Resume(Resource):
+    def get(self, path):
+    def post()                                             
 
 api.add_resource(RankModel, "/model/<string:path>/<string:job>")
+api.add_resource(Resume, "/resume/<string:path>")
+
 app.run(host="0.0.0.0", port=49152)

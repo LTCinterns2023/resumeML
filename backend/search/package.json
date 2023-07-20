@@ -1,0 +1,21 @@
+{
+  "name": "search",
+  "version": "0.0.1",
+  "description": "primitive search",
+  "main": "index.js",
+  "scripts": {
+    "start" : "node index",
+    "dev" : "nodemon index",
+    "test" : "nodemon search.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/LTCinterns2023/resumeML"
+  },
+  "type": "module",
+  "author": "windyskies",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
