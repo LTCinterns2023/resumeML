@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import Result from "./components/Result";
-import SideBar from "./SideBar";
+import ResumeCard from "./components/ResumeCard";
+import SideBar from "./components/SideBar";
 import {
   toggleExperienceFilter,
   toggleSkillFilter,
@@ -71,8 +71,7 @@ function App() {
         </div>
       </header>
 
-      <main>
-
+      <main className='ml-8 mr-8'>
         <SideBar
           experienceFilterOpen={experienceFilterOpen}
           toggleExperienceFilter={() => toggleExperienceFilter(experienceFilterOpen, setExperienceFilterOpen)}
@@ -92,11 +91,14 @@ function App() {
           handleEducationChange={(event) => handleEducationChange(event, selectedEducation, setSelectedEducation)}
         />
 
-        <section className='content'>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+        <section>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+          <ResumeCard/>
+
         </section>
 
       </main>

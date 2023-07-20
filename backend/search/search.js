@@ -62,10 +62,10 @@ const { default: j } = await import(conf.path, {
 /** @brief primitive search methods */
 /** @todo: implement new methods for performance and better match */
 
-export function searchKeywords(keywords) {  // search using keywords
+export function searchwithKeywords(keywords) {  // search using keywords
     //not a great way to search but will be used for v0
     const regex = new RegExp(keywords);
-    console.log(regex);
+    //console.log(regex);
 
     //without labels
     return j.filter(el => {
@@ -77,21 +77,19 @@ export function searchKeywords(keywords) {  // search using keywords
 export function searchwithLabel(lbl, keywords) {  // search using keywords
 
     //with labels 
-    keywords.toLowerCase()
-    console.log(keywords);
+    keywords = keywords.toLowerCase()
+
     return j.filter(el => { 
         return el.annotation.some(({label, points}) => label == lbl && points[0].text.toLowerCase() == keywords) 
         // @fix make it not equal but includes keywords
-        // also make it case sensitive
     })
     
 }
-console.log(
-    //searchKeywords("Abhishek"),
-    searchwithLabel("Name", "Afreen Jamadar")[0]
 
-);
-export function filter(category, ...args) { // filter resumes by categories
+function filter(category, ...args) { // filter resumes by categories
     //incomplete
     return 0;
+}
+export function quickLSearch(f, l, k) {
+    return f(l,k).length ? 1 : 0
 }
