@@ -15,6 +15,14 @@ import {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    // Handle the file upload logic here
+    console.log('Selected file:', file);
+  };
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -24,6 +32,9 @@ function App() {
     // Implement your search logic here
     console.log('Search query:', searchQuery);
   };
+ 
+
+  
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
@@ -49,8 +60,13 @@ function App() {
             value={searchQuery}
             onChange={handleInputChange}
             className="search-input"
-          />
+          /><div className= "search-upload">
           <button onClick={handleSearch} className="search-button">Search</button>
+           <button onClick={handleSearch} className="upload-button">Upload</button>
+        <input type="file" onChange={handleUpload} id="choose-file" />
+
+           </div>
+
         </div>
       </header>
 
