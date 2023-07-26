@@ -61,7 +61,7 @@ async function startFlaskServer() {
 
 // Function to start React server
 function startReactServer() {
-  const reactProcess = exec("npm i && npm start", { cwd: "frontend" });
+  const reactProcess = exec("npm i && npm run dev", { cwd: "frontend" });
 
   // Log the output and error streams
   reactProcess.stdout.on("data", (data) => {
