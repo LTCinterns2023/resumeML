@@ -13,16 +13,13 @@ from model import Model
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-
-number = random.randint(1, 10)
-print(number)
+conn = sqlite3.connect("./applicants.db")
+cursor = conn.cursor()
+cursor.execute("PRAGMA foreign_keys = ON")
 
 @app.route("/")
-@app.route("/applicant")
 def testHomePage():
     return {"message": "API working"}
-def new_candidate():
-    return render_template("candidate.html")
 
 class RankModel(Resource):
     def get(self, path, job):
@@ -36,9 +33,14 @@ class RankModel(Resource):
         model.getGraphs(predictions, show=True, save=True)
         return model.rank(predictions, job)
 
-#class Resume(Resource):
-    #def get(self, path):
-    #def post():                                             
+class Resume(Resource):
+    def get(self, path):
+        cursor.execute("""
+            SELECT            
+        """)
+
+    def post(self, path):
+        pass
 
 api.add_resource(RankModel, "/model/<string:path>/<string:job>")
 api.add_resource(Resume, "/resume/<string:path>")
