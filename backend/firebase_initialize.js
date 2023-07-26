@@ -3,7 +3,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getStorage, uploadBytes } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCR3A6WuCWT1R9LC5KqQODaY1QM1YA7oRA",
+  apiKey: "",
   authDomain: "resumeml.firebaseapp.com",
   projectId: "resumeml",
   storageBucket: "resumeml.appspot.com",

@@ -24,6 +24,11 @@ def testHomePage():
 def new_candidate():
     return render_template("candidate.html")
 
+def convert_to_blob(filename):
+    with open(filename, "rb") as file:
+        blobData = file.read()
+    return blobData
+
 class RankModel(Resource):
     def get(self, path, job):
         if not os.path.exists(path):

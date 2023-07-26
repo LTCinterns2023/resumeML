@@ -6,7 +6,5 @@ CREATE TABLE candidates {
     resumeData TEXT NOT NULL;
 }
 
-CREATE TABLE resume_pdfs {
-
-}
+CREATE TABLE resume_pdfs(filename TEXT PRIMARY KEY, content BLOB); 
 COMMIT;
