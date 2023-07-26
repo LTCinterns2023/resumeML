@@ -41,7 +41,8 @@ header {
 .upload-button {
   height: 40px;
   font-size: 20px;
-  float: right;
+  float: center;
+  margin-top: 20px;
 }
 
 /* Styles for the sidebar */
@@ -154,4 +155,13 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+.search-upload{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  
+}
+.choose-file{
+  margin-top:9rem;
 }

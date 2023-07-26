@@ -1,3 +1,7 @@
+const { default: API_Key } = require("./API_Key");
+
+const url = "http://127.0.0.1:5000/"
+const testPrompt = "äsdkfj;dlskf"
 const baseUrl = "http://127.0.0.1:5000/"
 
 function getPredict(){
@@ -11,10 +15,6 @@ function getPredict(){
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error(error));
-}
-
-const getMasterResume = () => {
-    fetch(baseUrl + "playlist")
 }
 
 export default getPredict;
