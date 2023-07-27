@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+    # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -163,6 +163,7 @@ wordEmbeding.d2v.vectors.npy
 
 my_dir/helloWorld
 testResumes
+firebase_initialize
 testResumes.zip
 **/package-lock.json
 **/example.txt

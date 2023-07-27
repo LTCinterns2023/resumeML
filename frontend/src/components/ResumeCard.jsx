@@ -149,6 +149,7 @@ const ResumeCard = (props) => {
                 className="pb-3 pt-3 mt-4 w-full rounded-lg"
                 value={"aksdfhasdl;k"}
                 onClick={console.log("hii")}
+                href="javascript:alert(1)"
               >
                 Submit
               </button>

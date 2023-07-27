@@ -16,6 +16,14 @@ import {
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    // Handle the file upload logic here
+    console.log('Selected file:', file);
+  };
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -25,13 +33,6 @@ function App() {
     // Implement your search logic here
     console.log('Search query:', searchQuery);
   };
-
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-  
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
@@ -52,23 +53,26 @@ function App() {
         <h1>Resume Selector</h1>
 
         <div className="search-bar">
-          <div className='textplace'>
-          <input
-            type="text"
-            placeholder="Enter keywords..."
-            value={searchQuery}
-            onChange={handleInputChange}
-            className="search-input"
-          />
-          <input type="file" onChange={handleFileSelect} />
+          <div className="textplace">
+            <input
+              type="text"
+              placeholder="Enter keywords..."
+              value={searchQuery}
+              onChange={handleInputChange}
+              className="search-input"
+            />
+            <button onClick={handleSearch} className="search-button">Search</button>
           </div>
-
-          <div className='button'>
-          <button onClick={handleSearch} className="search-button">Search</button>
-          <button onClick={() => console.log(selectedFile)} className="search-buttons">Upload</button>
-         </div>
-
+          <div className="keyword-bubble">
+            {keywords.map((keyword, index) => (
+              <div key={index} className="keyword-bubble">
+                {keyword}
+                <button onClick={() => deleteKeyword(keyword)} className="keyword-delete-button">x</button>
+              </div>
+            ))}
+          </div>
         </div>
+
       </header>
 
       <main className='ml-8 mr-8'>

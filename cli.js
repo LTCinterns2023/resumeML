@@ -10,9 +10,9 @@ function createVenv(venvCmd) {
     if (!(pwd.includes(".venv"))) {
       console.log("downloading all prerequites for backend server")
       exec(
-        `python -m venv .venv && 
+        `python3 -m venv .venv && 
         ${venvCmd} &&
-        pip install -r requirements.txt `,
+        pip install -r "requirements.txt" `,
         (error, stdout, stderr) => {
           if (error) {
             console.log(`Creating Virtual Env Failed: ${error}`);
@@ -38,7 +38,7 @@ async function startFlaskServer() {
   // Activate Venv
   let venvCmd;
   if (os.platform() === "win32") {
-    venvCmd = `.venv\\Scripts\\activate`;
+    venvCmd = `cd .venv\\Scripts\\activate`;
   } else {
     venvCmd = `source .venv/bin/activate`;
   }
@@ -61,7 +61,7 @@ async function startFlaskServer() {
 
 // Function to start React server
 function startReactServer() {
-  const reactProcess = exec("npm i && npm start", { cwd: "frontend" });
+  const reactProcess = exec("npm i && npm run dev", { cwd: "frontend" });
 
   // Log the output and error streams
   reactProcess.stdout.on("data", (data) => {

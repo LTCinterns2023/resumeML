@@ -1,23 +1,30 @@
 import os
 import random
 import sys
+import sqlite3 as sql
 
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api, Resource
 from model import Model
 
+
 # FLASK API
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-
-number = random.randint(1, 10)
-print(number)
+conn = sql.connect("./applicants.db")
+cursor = conn.cursor()
+cursor.execute("PRAGMA foreign_keys = ON")
 
 @app.route("/")
 def testHomePage():
     return {"message": "API working"}
+
+def convert_to_blob(filename):
+    with open(filename, "rb") as file:
+        blobData = file.read()
+    return blobData
 
 class RankModel(Resource):
     def get(self, path, job):
@@ -33,7 +40,12 @@ class RankModel(Resource):
 
 class Resume(Resource):
     def get(self, path):
-    def post()                                             
+        cursor.execute("""
+            SELECT            
+        """)
+
+    def post(self, path):
+        pass
 
 api.add_resource(RankModel, "/model/<string:path>/<string:job>")
 api.add_resource(Resume, "/resume/<string:path>")
