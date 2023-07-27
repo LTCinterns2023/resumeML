@@ -165,3 +165,10 @@ body {
 .choose-file{
   margin-top:9rem;
 }
+.keyword-bubble{
+  color: lightblue
+}
+.keyword-delete-button{
+  text-align: center;
+  font-size: 15px;
+}
