@@ -63,14 +63,6 @@ function App() {
             />
             <button onClick={handleSearch} className="search-button">Search</button>
           </div>
-          <div className="keyword-bubble">
-            {keywords.map((keyword, index) => (
-              <div key={index} className="keyword-bubble">
-                {keyword}
-                <button onClick={() => deleteKeyword(keyword)} className="keyword-delete-button">x</button>
-              </div>
-            ))}
-          </div>
         </div>
 
       </header>
