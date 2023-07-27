@@ -13,6 +13,11 @@
  *      1. implement elastic-search
  *      2. convert json file to nosql db
  *    
+ *     Prerequisites:
+        1. Ranking based on relevance
+        2. Filtering by keyword search (boolean search)
+        3. Rank by time, most recent one
+        4. Synonym support / Error handling (maybe not...)
  *************************************************************************************/
 
 
