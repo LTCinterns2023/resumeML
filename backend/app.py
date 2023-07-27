@@ -13,7 +13,7 @@ from model import Model
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-conn = sqlite3.connect("./applicants.db")
+conn = sql.connect("./applicants.db")
 cursor = conn.cursor()
 cursor.execute("PRAGMA foreign_keys = ON")
 
