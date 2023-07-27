@@ -34,6 +34,11 @@ function App() {
     console.log('Search query:', searchQuery);
   };
 
+  const deleteKeyword = (keywordToDelete) => {
+    setKeywords((prevKeywords) => prevKeywords.filter((keyword) => keyword !== keywordToDelete));
+  };
+  
+
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
 
@@ -62,6 +67,14 @@ function App() {
               className="search-input"
             />
             <button onClick={handleSearch} className="search-button">Search</button>
+          </div>
+          <div className="keyword-bubble">
+            {keywords.map((keyword, index) => (
+              <div key={index} className="keyword-bubble">
+                {keyword}
+                <button onClick={() => deleteKeyword(keyword)} className="keyword-delete-button">x</button>
+              </div>
+            ))}
           </div>
         </div>
 

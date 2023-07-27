@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 header {
   background-color: #00205B;
   color: #fff;
@@ -165,10 +163,27 @@ body {
 .choose-file{
   margin-top:9rem;
 }
-.keyword-bubble{
-  color: lightblue
+.keyword-bubble {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
-.keyword-delete-button{
-  text-align: center;
-  font-size: 10px
+.keyword-delete-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 5px;
 }
