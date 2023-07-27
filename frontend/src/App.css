@@ -5,10 +5,11 @@
 
 
 header {
-  background-color: #00205B;
+  background-color: #4a6ba8;
   color: #fff;
   font-family: 'Helvetica', sans-serif;
   font-weight: bold;
+  padding: 0.2rem
 }
 
 .search-bar {
@@ -27,13 +28,14 @@ header {
   margin-bottom: 1rem;
 }
 
-.search-button, .search-buttons {
+.search-button,
+.search-buttons {
   height: 40px;
   font-size: 20px;
   border-radius: 0.5rem;
 }
 
-.search-button{
+.search-button {
   margin-bottom: 1rem;
   margin-top: 1.4rem;
 }
@@ -53,7 +55,9 @@ header {
   text-align: left;
   border-radius: 0.5rem;
 }
-.button, .sidebar{
+
+.button,
+.sidebar {
   display: flex;
   flex-direction: column;
 }
@@ -146,12 +150,9 @@ body {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+h1{
+  background-color: #00205B;
+  padding: 0.5rem;
+  color: #fff;
+  margin-bottom: 0;
 }
