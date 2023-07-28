@@ -58,3 +58,8 @@ export const handleEducationChange = (event, selectedEducation, setSelectedEduca
   });
 };
 
+export function deleteKeyword(keywordToDelete, keywords, setKeywords) {
+  setKeywords((prevKeywords) => prevKeywords.filter((keyword) => keyword !== keywordToDelete));
+}
+
+

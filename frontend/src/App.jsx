@@ -10,7 +10,8 @@ import {
   handleExperienceChange,
   handleSkillChange,
   handleLanguageChange,
-  handleEducationChange
+  handleEducationChange,
+  deleteKeyword
 } from './Functions';
 
 
@@ -30,12 +31,22 @@ function App() {
   };
 
   const handleSearch = () => {
-    // Implement your search logic here
+    // Implement search engine
     console.log('Search query:', searchQuery);
   };
 
-  const deleteKeyword = (keywordToDelete) => {
-    setKeywords((prevKeywords) => prevKeywords.filter((keyword) => keyword !== keywordToDelete));
+  //keyword search
+  const [keywords, setKeywords] = useState([]);
+  const [currentKeyword, setCurrentKeyword] = useState('');
+  const handleKeywordChange = (event) => {
+    setCurrentKeyword(event.target.value);
+  };
+  const handleKeywordSubmit = (event) => {
+    event.preventDefault();
+    if (currentKeyword.trim() !== '') {
+      setKeywords((prevKeywords) => [...prevKeywords, currentKeyword.trim()]);
+      setCurrentKeyword('');
+    }
   };
   
 
@@ -51,33 +62,32 @@ function App() {
   const [educationFilterOpen, setEducationFilterOpen] = useState(false);
   const [selectedEducation, setSelectedEducation] = useState([]);
 
+  
 
   return (
     <div className="App">
       <header>
         <h1>Resume Selector</h1>
-
         <div className="search-bar">
-          <div className="textplace">
+          <form onSubmit={handleKeywordSubmit} className="textplace">
             <input
               type="text"
               placeholder="Enter keywords..."
-              value={searchQuery}
-              onChange={handleInputChange}
+              value={currentKeyword}
+              onChange={handleKeywordChange}
               className="search-input"
             />
-            <button onClick={handleSearch} className="search-button">Search</button>
-          </div>
-          <div className="keyword-bubble">
-            {keywords.map((keyword, index) => (
-              <div key={index} className="keyword-bubble">
-                {keyword}
-                <button onClick={() => deleteKeyword(keyword)} className="keyword-delete-button">x</button>
-              </div>
-            ))}
-          </div>
+          </form>
+          <button onClick={handleSearch} className="search-button">Search</button>
         </div>
-
+        <div className="keyword-bubble-container">
+          {keywords.map((keyword, index) => (
+            <div key={index} className="keyword-bubble">
+              {keyword}
+              <button onClick={() => deleteKeyword(keyword, keywords, setKeywords)} className="keyword-delete-button">x</button>
+            </div>
+          ))}
+        </div>
       </header>
 
       <main className='ml-8 mr-8'>
