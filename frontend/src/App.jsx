@@ -13,6 +13,7 @@ import {
   handleEducationChange,
   deleteKeyword
 } from './Functions';
+//import search.js
 
 
 function App() {
@@ -30,17 +31,14 @@ function App() {
     setSearchQuery(event.target.value);
   };
 
-  const handleSearch = () => {
-    // Implement search engine
-    console.log('Search query:', searchQuery);
-  };
-
   //keyword search
   const [keywords, setKeywords] = useState([]);
   const [currentKeyword, setCurrentKeyword] = useState('');
+
   const handleKeywordChange = (event) => {
     setCurrentKeyword(event.target.value);
   };
+
   const handleKeywordSubmit = (event) => {
     event.preventDefault();
     if (currentKeyword.trim() !== '') {
@@ -48,7 +46,13 @@ function App() {
       setCurrentKeyword('');
     }
   };
-  
+
+  const handleSearch = () => {
+    // Combine with searchWithKeywords in search.js and ResumeCard.jsx
+    console.log('Search query:', searchQuery);
+    // const searchResults = searchWithKeywords(keywords);
+  };
+
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
@@ -62,11 +66,14 @@ function App() {
   const [educationFilterOpen, setEducationFilterOpen] = useState(false);
   const [selectedEducation, setSelectedEducation] = useState([]);
 
-  
+
 
   return (
     <div className="App">
       <header>
+        <div className="favourite-section">
+          🤍 {/* Need to make a favourite page */}
+        </div>
         <h1>Resume Selector</h1>
         <div className="search-bar">
           <form onSubmit={handleKeywordSubmit} className="textplace">
@@ -111,18 +118,20 @@ function App() {
         />
 
         <section>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
 
         </section>
 
       </main>
       <footer>
-        {/* Footer content */}
+        <h>LTC Interns - Ontario Ministry of Transportation</h>
+        <br></br>
+        <h>May - August 2023</h>
       </footer>
     </div>
   );
