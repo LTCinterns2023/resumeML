@@ -2,40 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 header {
-  background-color: #00205B;
+  background-color: #212f49;
   color: #fff;
   font-family: 'Helvetica', sans-serif;
   font-weight: bold;
 }
 
-.search-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.search-input {
-  width: 300px;
-  height: 20px;
-  font-size: 20px;
-  padding: 8px;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.search-button, .search-buttons {
-  height: 40px;
-  font-size: 20px;
-  border-radius: 0.5rem;
-}
-
-.search-button{
-  margin-bottom: 1rem;
-  margin-top: 1.4rem;
+footer {
+  background-color: #212f49;
+  color: #fff;
+  text-align: right;
+  font-size: 10px;
 }
 
 .upload-button {
@@ -85,6 +63,7 @@ header {
 .textplace {
   display: flex;
   flex-direction: column;
+  margin-right: 10px;
 }
 
 /* Styles for header, main, and footer */
@@ -160,8 +139,63 @@ body {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  
 }
 .choose-file{
   margin-top:9rem;
+}
+
+/*Search*/
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.search-input {
+  width: 100%;
+  height: 20px;
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 0.5rem;
+}
+
+.search-button{
+  height: 40px;
+  font-size: 20px;
+  border-radius: 0.5rem;
+  margin-left: 10px;
+}
+
+.keyword-bubble {
+  color: #212f49;
+  display: inline-flex;
+  align-items: center;
+  background-color: #DDEBED;
+  padding: 10px 20px;;
+  margin-right: 10px;
+  margin-top: 5px;
+  border-radius: 20px;
+}
+
+.keyword-delete-button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  margin-right: -5px;
+  margin-left: 5px;
+}
+
+.keyword-bubble-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+/*Favourites*/
+.favourite-section {
+  font-size: 25px;
+  display: flex;
 }

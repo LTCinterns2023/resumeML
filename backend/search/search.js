@@ -13,6 +13,11 @@
  *      1. implement elastic-search
  *      2. convert json file to nosql db
  *    
+ *     Prerequisites:
+        1. Ranking based on relevance
+        2. Filtering by keyword search (boolean search)
+        3. Rank by time, most recent one
+        4. Synonym support / Error handling (maybe not...)
  *************************************************************************************/
 
 
@@ -63,7 +68,6 @@ const { default: j } = await import(conf.path, {
 /** @todo: implement new methods for performance and better match */
 
 export function searchwithKeywords(keywords) {  // search using keywords
-    //not a great way to search but will be used for v0
     const regex = new RegExp(keywords);
     //console.log(regex);
 
@@ -71,7 +75,16 @@ export function searchwithKeywords(keywords) {  // search using keywords
     return j.filter(el => {
         return regex.test(el.content)
     })
+}
 
+export function searchWithKeywords(keywords) {
+    // Not a great way to search but will be used for v0
+    const regexes = keywords.map(keyword => new RegExp(keyword, 'i'));
+  
+    // Without labels
+    return j.filter(el => {
+      return regexes.every(regex => regex.test(el.content.toLowerCase()));
+    });
 }
 
 export function searchwithLabel(lbl, keywords) {  // search using keywords

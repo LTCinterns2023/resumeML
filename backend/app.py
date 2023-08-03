@@ -13,13 +13,18 @@ from model import Model
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
-conn = sqlite3.connect("./applicants.db")
+conn = sql.connect("./applicants.db")
 cursor = conn.cursor()
 cursor.execute("PRAGMA foreign_keys = ON")
 
 @app.route("/")
 def testHomePage():
     return {"message": "API working"}
+
+def convert_to_blob(filename):
+    with open(filename, "rb") as file:
+        blobData = file.read()
+    return blobData
 
 class RankModel(Resource):
     def get(self, path, job):

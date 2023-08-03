@@ -10,8 +10,10 @@ import {
   handleExperienceChange,
   handleSkillChange,
   handleLanguageChange,
-  handleEducationChange
+  handleEducationChange,
+  deleteKeyword
 } from './Functions';
+//import search.js
 
 
 function App() {
@@ -29,10 +31,28 @@ function App() {
     setSearchQuery(event.target.value);
   };
 
-  const handleSearch = () => {
-    // Implement your search logic here
-    console.log('Search query:', searchQuery);
+  //keyword search
+  const [keywords, setKeywords] = useState([]);
+  const [currentKeyword, setCurrentKeyword] = useState('');
+
+  const handleKeywordChange = (event) => {
+    setCurrentKeyword(event.target.value);
   };
+
+  const handleKeywordSubmit = (event) => {
+    event.preventDefault();
+    if (currentKeyword.trim() !== '') {
+      setKeywords((prevKeywords) => [...prevKeywords, currentKeyword.trim()]);
+      setCurrentKeyword('');
+    }
+  };
+
+  const handleSearch = () => {
+    // Combine with searchWithKeywords in search.js and ResumeCard.jsx
+    console.log('Search query:', searchQuery);
+    // const searchResults = searchWithKeywords(keywords);
+  };
+
 
   const [experienceFilterOpen, setExperienceFilterOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState([]);
@@ -47,23 +67,34 @@ function App() {
   const [selectedEducation, setSelectedEducation] = useState([]);
 
 
+
   return (
     <div className="App">
       <header>
+        <div className="favourite-section">
+          🤍 {/* Need to make a favourite page */}
+        </div>
         <h1>Resume Selector</h1>
-
         <div className="search-bar">
-          <div className='textplace'>
-          <input
-            type="text"
-            placeholder="Enter keywords..."
-            value={searchQuery}
-            onChange={handleInputChange}
-            className="search-input"
-          />
+          <form onSubmit={handleKeywordSubmit} className="textplace">
+            <input
+              type="text"
+              placeholder="Enter keywords..."
+              value={currentKeyword}
+              onChange={handleKeywordChange}
+              className="search-input"
+            />
+          </form>
           <button onClick={handleSearch} className="search-button">Search</button>
         </div>
-      </div>
+        <div className="keyword-bubble-container">
+          {keywords.map((keyword, index) => (
+            <div key={index} className="keyword-bubble">
+              {keyword}
+              <button onClick={() => deleteKeyword(keyword, keywords, setKeywords)} className="keyword-delete-button">x</button>
+            </div>
+          ))}
+        </div>
       </header>
 
       <main className='ml-8 mr-8'>
@@ -87,18 +118,20 @@ function App() {
         />
 
         <section>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
-          <ResumeCard/>
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
+          <ResumeCard />
 
         </section>
 
       </main>
       <footer>
-        {/* Footer content */}
+        <h>LTC Interns - Ontario Ministry of Transportation</h>
+        <br></br>
+        <h>May - August 2023</h>
       </footer>
     </div>
   );
