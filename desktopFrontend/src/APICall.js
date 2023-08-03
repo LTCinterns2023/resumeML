@@ -1,3 +1,4 @@
+const { default: API_Key } = require("./API_Key");
 
 const url = "http://127.0.0.1:5000/"
 const testPrompt = "äsdkfj;dlskf"
