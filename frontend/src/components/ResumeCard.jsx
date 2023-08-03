@@ -121,7 +121,7 @@ const ResumeCard = (props) => {
               <div className="flex ml-auto">
                 <FaTimes 
                   className="text-red-500 text-2xl cursor-pointer mt-4" 
-                  onClick={() => (setNote(!note))}
+                  onClick={() => (setExpand(!expand))}
                 />
               </div>
             </div>
