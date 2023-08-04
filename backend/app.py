@@ -7,6 +7,7 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api, Resource
 from model import Model
+from flask_sqlalchemy import SQLAlchemy
 
 
 # FLASK API
@@ -21,8 +22,8 @@ cursor.execute("PRAGMA foreign_keys = ON")
 def testHomePage():
     return {"message": "API working"}
 
-def convert_to_blob(filename):
-    with open(filename, "rb") as file:
+def convert_to_blob(self):
+    with open(self, "rb") as file:
         blobData = file.read()
     return blobData
 

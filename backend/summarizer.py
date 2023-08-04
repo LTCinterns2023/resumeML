@@ -5,12 +5,13 @@ import PyPDF2
 import docx
 
 class resume:
-    def __init__(self, file_path, summary, raw_text):
+    def __init__(self, file_path, summary, raw_text, blobData):
         self.file_path = file_path
         self.directory = os.path.dirname(file_path)
         self.file_name = os.path.basename(file_path)
         self.raw_text = raw_text
         self.summary = summary
+        self.blobData = blobData
     
     def get_file_extension(self):
         return os.path.splitext(self.file_path)[-1].lower()
@@ -61,3 +62,6 @@ class resume:
         summary = response['choices'][0]['text']
 
         return summary
+    
+ 
+    
