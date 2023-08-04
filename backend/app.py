@@ -21,11 +21,6 @@ cursor.execute("PRAGMA foreign_keys = ON")
 def testHomePage():
     return {"message": "API working"}
 
-def convert_to_blob(filename):
-    with open(filename, "rb") as file:
-        blobData = file.read()
-    return blobData
-
 class RankModel(Resource):
     def get(self, path, job):
         if not os.path.exists(path):
