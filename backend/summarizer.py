@@ -63,7 +63,5 @@ class resume:
 
         return summary
     
-    def convert_to_blob(self):
-        with open(self, "rb") as file:
-            blobData = file.read()
-        return blobData
+ 
+    
