@@ -5,8 +5,9 @@ import PyPDF2
 import docx
 
 class resume:
-    def __init__(self, file_path, summary, raw_text, blobData):
-        self.file_path = file_path
+    def __init__(self, file_path, summary, raw_text, blobData, id):
+        self.id = id
+        self.file_path = file_path #dont need filepath or directory attributes if using a db to store
         self.directory = os.path.dirname(file_path)
         self.file_name = os.path.basename(file_path)
         self.raw_text = raw_text
@@ -62,6 +63,7 @@ class resume:
         summary = response['choices'][0]['text']
 
         return summary
+    
     
  
     

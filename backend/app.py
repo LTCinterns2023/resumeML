@@ -9,7 +9,6 @@ from flask_restful import Api, Resource
 from model import Model
 from flask_sqlalchemy import SQLAlchemy
 
-
 # FLASK API
 app = Flask(__name__)
 CORS(app)
@@ -52,3 +51,19 @@ api.add_resource(RankModel, "/model/<string:path>/<string:job>")
 api.add_resource(Resume, "/resume/<string:path>")
 
 app.run(host="0.0.0.0", port=49152)
+
+db = SQLAlchemy(app)
+
+class files(db.Model):
+   id = db.Column('resume_id', db.Integer, primary_key = True)
+   blobData = db.Column(db.Blob, nullable = True)
+
+class resume:
+    def __init__(self, id, blobData):
+        self.id = id
+        self.blobData = blobData
+    
+    #to do
+
+if __name__ == '__main__':
+   db.create_all()  
