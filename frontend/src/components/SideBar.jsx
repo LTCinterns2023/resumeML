@@ -20,7 +20,7 @@ function SideBar({
 }) {
   return (
     <aside className="sidebar">
-      <h2>Filters</h2>
+      <h2 className='text-primary'>Filters</h2>
       <div className="filter">
         <label onClick={toggleExperienceFilter} className="filter-label">
           Experience
@@ -180,6 +180,7 @@ function SideBar({
           </div>
         )}
       </div>
+      <div className='mb-64 mt-64'/>
     </aside>
   );
 }

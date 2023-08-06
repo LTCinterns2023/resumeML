@@ -1,9 +1,7 @@
 import React from "react";
 
 const Search = ({
-  handleFilePathSubmit,
-  currentFilePath,
-  handleFilePathChange,
+  handleFileUpload,
   handleKeywordSubmit,
   currentKeyword,
   handleKeywordChange,
@@ -11,21 +9,7 @@ const Search = ({
 }) => {
   return (
     <>
-      {" "}
-      <div className="search-bar">
-        <form onSubmit={handleFilePathSubmit} className="textplace">
-          <input
-            type="text"
-            placeholder="Path to Resume Folder..."
-            value={currentFilePath}
-            onChange={handleFilePathChange}
-            className="search-input"
-          />
-        </form>
-        <button onClick={handleFilePathSubmit} className="search-button">
-          Display
-        </button>
-      </div>
+      {/* Search With Keywords */}
       <div className="search-bar">
         <form onSubmit={handleKeywordSubmit} className="textplace">
           <input
@@ -36,11 +20,27 @@ const Search = ({
             className="search-input"
           />
         </form>
-        <button onClick={handleSearch} className="search-button">
+        <button onClick={handleSearch} className="search-button px-5">
           Search
         </button>
       </div>
+
+      {/* Upload Feature */}
+      <div className="mt-4 mb-4">
+        <label 
+          htmlFor="fileInput" 
+          className="bg-gray-100 text-black text-1.5rem pl-32 pr-32 py-1 rounded-lg cursor-pointer">
+          Upload Files
+        </label>
+        <input 
+          id="fileInput" 
+          type="file" 
+          className="hidden" 
+          onChange={handleFileUpload}
+          multiple
+        />
+      </div>
     </>
   );
-}
+};
 export default Search;

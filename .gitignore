@@ -167,6 +167,7 @@ firebase_initialize
 testResumes.zip
 **/package-lock.json
 **/example.txt
+config.json
 
 .DS_Store
 .vscode/

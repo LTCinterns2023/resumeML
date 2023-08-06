@@ -1,5 +1,4 @@
-import { React, useState } from "react";
-import { FaHeart, FaExpand, FaEdit, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 const others = ["Advocate", "Arts", "Health and fitness"];
 const business = [
   "Business Analyst",
@@ -39,59 +38,67 @@ const OPTIONS = [
   ...backend,
   ...QA,
 ];
-const Overlay = (props) => {
-  const [isToggled, setIsToggled] = useState(false);
 
-  const handleToggle = () => {
-    setIsToggled(!isToggled);
-  };
-
+const Overlay = ({
+  handleClose,
+  job,
+  handleJob,
+  rankByCatg,
+  rankBySim,
+  handleCatg,
+  handleSim,
+}) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center">
-      <div className="text-secondary text-2xl font-bold content bg-white rounded-lg p-8 grid grid-cols-2 gap-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-primary underline">Settings Page</h2>
-          <FaTimes
-            className="text-red-500 text-2xl cursor-pointer"
-            onClick={props.handleClose}
-          />
-        </div>
-        <div className="flex items-center">
-          <label htmlFor="job" className="mr-2">
-            Job:
-          </label>
-          <select id="job" className="h-7">
-            <option value="" disabled>
-              Select an option
-            </option>
-            {OPTIONS.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex items-center">
-          <label htmlFor="category">Rank By Category: </label>
+      <div className="text-secondary text-2xl font-bold content bg-white rounded-lg p-2 relative">
+        <h2 className="text-primary underline">Settings Page</h2>
+        <FaTimes
+          className="text-red-500 text-2xl cursor-pointer absolute top-5 right-5"
+          onClick={handleClose}
+        />
 
-          <input
-            type="checkbox"
-            checked={isToggled}
-            onChange={handleToggle}
-            id="category"
-            className="mr-2"
-          />
-        </div>
-        <div className="flex items-center">
-        <label htmlFor="similarity">Rank By Similarity: </label>
+        <div className="flex items-center justify-center flex-col p-2 text-secondary">
+          {/* Job Dropdown Box */}
+          <div className="p-2">
+            <label htmlFor="job" className="mr-2">
+              Job:
+            </label>
+            <select
+              className="h-7"
+              value={job}
+              onChange={(event) => handleJob(event.target.value)}
+            >
+              <option disabled>Select an option</option>
 
-          <input
-            type="checkbox"
-            checked={isToggled}
-            onChange={handleToggle}
-            id="similarity"
-            className="mr-2"
-          />
+              {OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Rank By Category Checkbox*/}
+          <div className="p-2">
+            <label htmlFor="category">Rank By Category: </label>
+            <input
+              type="checkbox"
+              checked={rankByCatg}
+              onChange={handleCatg}
+              className="ml-4"
+            />
+          </div>
+
+          {/* Rank By Similarity Checkbox */}
+          <div className="p-2">
+            <label htmlFor="similarity">Rank By Similarity: </label>
+            <input
+              type="checkbox"
+              checked={rankBySim}
+              onChange={handleSim}
+              className="ml-4"
+            />
+          </div>
         </div>
       </div>
     </div>
