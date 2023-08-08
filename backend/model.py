@@ -7,7 +7,6 @@ import nltk
 import seaborn as sns
 import numpy as np
 import pandas as pd
-from PyPDF2 import PdfReader
 from gensim.models import KeyedVectors
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -53,36 +52,18 @@ CATG_TO_GROUP = {
 
 
 class Model:
-    def __init__(self, resumePath="resumes", modelPath="model.h5"):
-        print(os.getcwd())
+    def __init__(self, applicantID, resumeText, modelPath="./backend/model.h5"):
         try:
             self.model = keras.models.load_model(modelPath)
         except FileNotFoundError:
             print("Error No Model Found")
 
-        if os.path.exists(resumePath):
-            self.resumePath = resumePath
-        else:
-            print("Error Resume Path Not Found")
-
-        self.df = None
-
-    def _loadResumes(self):
-        resumes = {
-            "title": [],
-            "resume": []
-        }
-
-        for resume in os.listdir(self.resumePath):
-            reader = PdfReader(f"{self.resumePath}/{resume}")
-            resumeContent = ""
-            for i in range(len(reader.pages)):
-                resumeContent += reader.pages[i].extract_text()
-
-            resumes["title"].append(resume)
-            resumes["resume"].append(resumeContent)
-
-        self.df = pd.DataFrame(resumes)
+        self.title = title
+        self.resumeText = resumeText
+        self.df = pd.DataFrame({
+            "title": [title],
+            "resume": [resumeText]
+        })
 
     def _preprocessResume(self):
         # Clean Resumes
@@ -170,12 +151,8 @@ class Model:
 
         self.df["resume"] = self.df["resume"].apply(addPadding)
 
-    def initializeResumes(self, df=False):
+    def initializeResumes(self):
         try:
-            if str(type(df)) != "bool":
-                self._loadResumes()
-            else:
-                self.df = df
             self._preprocessResume()
             self._vectorize()
             self._addPadding()
@@ -224,8 +201,7 @@ class Model:
 
 
 if __name__ == "__main__":
-    model = Model()
+    model = Model("test")
     model.initializeResumes()
     predictions = model.getPredictions()
-    #model.getGraphs(predictions, show=True, save=True)
     print(model.rank(predictions, "Database"))

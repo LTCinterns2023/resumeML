@@ -207,6 +207,7 @@ const App = () => {
             {filesUpload.map((fileObject, index) => (
               <ResumeCard
                 key={index}
+                index={index}
                 fileObject={fileObject}
                 summary={fileSummary}
                 onFileDelete={handleFileDelete}

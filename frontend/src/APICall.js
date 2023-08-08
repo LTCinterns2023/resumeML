@@ -1,19 +1,28 @@
+const baseURL = "http://127.0.0.1:49152/";
 
-const url = "http://127.0.0.1:5000/";
-const testPrompt = "äsdkfj;dlskf";
-const baseUrl = "http://127.0.0.1:5000/";
+const postResume = async (filePDF) => {
+	let formData = new FormData();
+	formData.append("pdf", filePDF);
+  
+	try {
+	  const response = await fetch(baseURL + "resume/", {
+		method: "POST",
+		body: formData,
+	  });
+  
+	  if (!response.ok) {
+		  throw new Error("Network response was not ok");
+	  }
+  
+	  const data = await response.json();
+	  console.log(data); 
+	  return data;
 
-function getPredict() {
-  let formData = new FormData();
-  formData.append("link", "https://youtube.com");
-
-  fetch(baseUrl + "playlist/7GvYHdhlFMTQvwrJTxZRHv", {
-    method: "POST",
-    body: formData,
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error(error));
-}
-
-export default getPredict;
+	} catch (error) {
+	  console.error("Fetch error:", error);
+	  throw error; // Rethrow the error to handle it higher up if needed
+	}
+  };
+  
+  export default postResume;
+  

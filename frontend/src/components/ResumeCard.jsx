@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import APICall from "../APICall";
+import React, { useState, useEffect } from "react";
+import postResume from "../APICall";
 import "../App.css";
 import { FaHeart, FaExpand, FaEdit, FaTimes } from "react-icons/fa";
 
@@ -14,17 +14,27 @@ const ResumeCard = ({
   like,
   onFileDelete,
   summary,
-  key,
+  index,
 }) => {
-  /*
-  const summary =
-    "Ethan Rong is a computer science student at the University of Western Ontario with a 4.0 GPA. Proficient in Python, Java, and web development, he has experience with tools like PyCharm, Jupyter Notebook, and GitHub. Ethan has excelled in hackathons, placing 4th out of 80 teams at Hack Western 9 and 2nd at MapleHacks. Notable projects include Nourish-Now, a web app using React JS and ML to forecast WIC food program demand, and Hover-Touch, enabling non-verbal communication through air-written messages. He has also developed Eye-Explore, a mobile app for the visually impaired. Ethan's extracurricular involvements include Western AI and the Global Research Council.";
-  const showRank = false;
-  const like = false;
-  */
   const [note, setNote] = useState(false);
   const [expand, setExpand] = useState(false);
   const file = fileObject.file;
+  const [apiResponse, setApiResponse] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await postResume(fileObject.file);
+        setApiResponse(response); // Update state with API response
+      } catch (error) {
+        console.log("Server Error");
+      }
+    };
+
+    fetchData();
+  }, [fileObject.file]); // Run effect when fileObject.file changes
+
+  
   if (file.type !== "application/pdf") {
     return <></>;
   } else {
@@ -32,7 +42,6 @@ const ResumeCard = ({
       <div className="flex flex-col relative">
         <div className="animate-slideup content grid grid-cols-3 gap-4 p-5 h-[19rem] text-left">
           <div className="col-span-2">
-            {console.log(file)}
             <object
               data={URL.createObjectURL(file)}
               type="application/pdf"
@@ -67,16 +76,16 @@ const ResumeCard = ({
 
               <div className="flex flex-col mt3 truncate text-align-left text-primary">
                 <div>
-                  <b>Name: </b> {name}
+                  <b>Name: </b> {apiResponse === null ? "Loading..." : apiResponse.applicantName}
                 </div>
                 <div>
-                  <b>Best Fit:</b> Quality Assurance Engineer{" "}
+                  <b>Best Fit:</b> Quality Assurance Engineer
                 </div>
                 <div>
-                  <b>Email:</b> {email}
+                  <b>Email:</b> {apiResponse === null ? "Loading..." : apiResponse.applicantEmail}
                 </div>
                 <div>
-                  <b>Phone:</b> {phone}
+                  <b>Phone:</b> {apiResponse === null ? "Loading..." : apiResponse.applicantNumber}
                 </div>
               </div>
 
@@ -84,7 +93,7 @@ const ResumeCard = ({
                 <div className="text-secondary">
                   <b>Summary of Qualifications: </b>
                   <div className="line-clamp-6 text-justify text-black">
-                    {summary[key]}
+                    {apiResponse === null ? "Loading..." : apiResponse.resumeSummary}
                   </div>
                 </div>
                 <div className="mt-3 flex flex-row">
@@ -121,7 +130,7 @@ const ResumeCard = ({
             <div className="content pl-5 pr-5 pb-6 text-left animate-slideleft">
               <div className="flex flex-row">
                 <h2 className="text-secondary">
-                  Summary of {name}'s Qualifications
+                  Summary of {apiResponse === null ? "Loading..." : apiResponse.applicantName}'s Qualifications
                 </h2>
                 <div className="flex ml-auto">
                   <FaTimes
@@ -130,13 +139,13 @@ const ResumeCard = ({
                   />
                 </div>
               </div>
-              <p> {summary} </p>
+              <p> {apiResponse === null ? "Loading..." : apiResponse.resumeSummary} </p>
             </div>
           )}
           {note && (
             <div className="content pl-5 pr-5 pb-8 text-left animate-slideleft">
               <div className="flex flex-row">
-                <h2 className="text-secondary">Notes on {name}'s Profile</h2>
+                <h2 className="text-secondary">Notes on {apiResponse === null ? "Loading..." : apiResponse.applicantName}'s Profile</h2>
                 <div className="flex ml-auto">
                   <FaTimes
                     className="text-red-500 text-2xl cursor-pointer mt-4"
