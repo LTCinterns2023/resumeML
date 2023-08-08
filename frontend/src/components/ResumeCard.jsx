@@ -17,10 +17,6 @@ const ResumeCard = ({
   key,
 }) => {
   /*
-  const summary =
-    "Ethan Rong is a computer science student at the University of Western Ontario with a 4.0 GPA. Proficient in Python, Java, and web development, he has experience with tools like PyCharm, Jupyter Notebook, and GitHub. Ethan has excelled in hackathons, placing 4th out of 80 teams at Hack Western 9 and 2nd at MapleHacks. Notable projects include Nourish-Now, a web app using React JS and ML to forecast WIC food program demand, and Hover-Touch, enabling non-verbal communication through air-written messages. He has also developed Eye-Explore, a mobile app for the visually impaired. Ethan's extracurricular involvements include Western AI and the Global Research Council.";
-  const showRank = false;
-  const like = false;
   */
   const [note, setNote] = useState(false);
   const [expand, setExpand] = useState(false);
@@ -40,7 +36,7 @@ const ResumeCard = ({
             >
               <p>
                 Unable to display PDF file.{" "}
-                <a href="../assets/test1.pdf">Download</a> instead.
+                <a href="../assets/.pdf">Download</a> instead.
               </p>
             </object>
           </div>
