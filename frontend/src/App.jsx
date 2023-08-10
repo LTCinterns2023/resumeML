@@ -18,15 +18,11 @@ import {
   deleteKeyword,
 } from "./Functions";
 import { FaHeart } from "react-icons/fa";
-//import search.js
+import getSearch from "./APICall"
 
 const App = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-
   // File Submission
   const [filesUpload, setFilesUpload] = useState([]);
-  const [fileSummary, setFileSummary] = useState([]);
 
   const handleFileUpload = (event) => {
     const files = event.target.files;
@@ -34,7 +30,7 @@ const App = () => {
       // Accessing the files
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        setFilesUpload([...filesUpload, {file:file}]);
+        setFilesUpload([...filesUpload, {file:file, applicantID:-1}]);
       }
     } else {
       console.log("No files selected.");
@@ -46,18 +42,7 @@ const App = () => {
       prevFiles.filter((existingFile) => existingFile.file !== fileToRemove)
     );
   };
-
-  // Scraping Resumes For Additional Details
-  useEffect(() => {
-    if (
-      filesUpload.length > 0 &&
-      filesUpload[filesUpload.length - 1].kind === "application/pdf"
-    ) {
-      
-
-      // Uploading to Backend 
-    }
-  }, [filesUpload]);
+  
 
   //keyword search
   const [keywords, setKeywords] = useState([]);
@@ -77,8 +62,19 @@ const App = () => {
 
   const handleSearch = () => {
     // Combine with searchWithKeywords in search.js and ResumeCard.jsx
-    console.log("Search query:", searchQuery);
-    // const searchResults = searchWithKeywords(keywords);
+    console.log("Search query:", keywords);
+    const fetchSearch = async () => {
+      try {
+        console.log("HIII");
+        const response = await getSearch(keywords);
+        // All Those That Pass The Filter Have Their ID In Response
+        setFilesUpload(filesUpload.filter((file) => response.validIDs.includes(file.applicantID))); 
+    
+      } catch (error) {
+        console.log("Server Error");
+      }
+    };
+    fetchSearch(keywords);
   };
 
   // SideBar CheckBoxes
@@ -101,7 +97,7 @@ const App = () => {
   const [rankBySim, setRankBySim] = useState(false);
 
   return (
-    <div className="App">
+    <div className="App relative">
       <div>
         <header>
           <div className="favourite-section mt-2">
@@ -142,7 +138,6 @@ const App = () => {
           />
 
           <KeywordBubble
-            keyword={keywords}
             deleteKeyword={deleteKeyword}
             keywords={keywords}
             setKeywords={setKeywords}
@@ -204,12 +199,12 @@ const App = () => {
           {/* Current Viewable Paths and Each Resume */}
           <section>
             <UploadPanel files={filesUpload} onFileDelete={handleFileDelete} />
+            
             {filesUpload.map((fileObject, index) => (
               <ResumeCard
                 key={index}
                 index={index}
                 fileObject={fileObject}
-                summary={fileSummary}
                 onFileDelete={handleFileDelete}
               />
             ))}

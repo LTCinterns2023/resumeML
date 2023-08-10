@@ -1,17 +1,16 @@
 from flask import Flask, request
 from flask_cors import CORS
 from flask_restful import Api, Resource, reqparse, fields, marshal_with
-from werkzeug.local import Local
-
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lex_rank import LexRankSummarizer
 
 import sqlite3 as sql
 import PyPDF2
-from model import Model
+from modelCNN import Model
 import re
 import pickle
+import pdfplumber
+from summarizer import summarize
+import atexit
+from commands import nuke
 
 # FLASK API SETUP
 app = Flask(__name__)
@@ -91,19 +90,40 @@ resume_get_args = reqparse.RequestParser()
 resume_get_args.add_argument("id", type=str, help="ID needed", required=True)
 resume_get_args.add_argument("job", type=str, help="Job needed", required=True)
 
+
 # Helper Function for Latin-1 Codec
 def elimNonLatin(text):
     cleaned_text = ""
     for char in text:
-        if ord(char) <= 255:  
+        if char == ":":
+            cleaned_text += ": "
+        elif ord(char) <= 255:
             cleaned_text += char
+        else:
+            cleaned_text += " "
     return cleaned_text
+
 
 # API Resources
 class Search(Resource):
     def get(self):
         searchTerms = search_get_args.parse_args()
-        return 404
+        conn.execute(f"""
+            SELECT applicantID, resumeText FROM candidates
+        """)
+        rows = cursor.fetchAll()
+
+        validResumes = []
+        for row in rows:
+            validResumes.append(row[0])
+            for term in searchTerms:
+                if term not in row[1]:
+                    validResumes.pop()
+                    break
+                
+        # ONLY VALID RESUMES GET THEIR ID RETURNED
+        return {"validIDs": validResumes}, 200
+
 
 class Notes(Resource):
     def get(self, applicantID):
@@ -161,6 +181,8 @@ class Like(Resource):
 
 
 class Resume(Resource):
+    count = 0
+
     @marshal_with(resourceField)
     def get(self):
         args = resume_get_args.parse_args()
@@ -195,102 +217,119 @@ class Resume(Resource):
             return 500
 
     def post(self):
-        try:
-            uploaded_file = request.files['pdf']
-            if uploaded_file.filename[-4:] != ".pdf":
-                return 415, {"response": "Not A PDF File"}
-        except KeyError:
-            return 400, {"response": "No File in the HTTP Body"}
+        Resume.count += 1
+        if Resume.count % 2 == 1:
+            try:
+                uploaded_file = request.files['pdf']
+                if uploaded_file.filename[-4:] != ".pdf":
+                    return 415, {"response": "Not A PDF File"}
+            except KeyError:
+                return 400, {"response": "No File in the HTTP Body"}
 
-        pdfObject = PyPDF2.PdfReader(uploaded_file)
-        textResume = ""
+            with pdfplumber.open(uploaded_file) as pdf:
+                textResume = ""
+                for page in pdf.pages:
+                    textResume += page.extract_text()
 
-        # Extract text from each page
-        for page_num in range(len(pdfObject.pages)):
-            page = pdfObject.pages[page_num]
-            textResume += page.extract_text()
-        textResume = elimNonLatin(textResume)
+            # Cleaning Result
+            textResume = elimNonLatin(textResume)
+            textResume = re.sub(r'\s+', ' ', textResume).strip()  # Remove Extra Whitespace
+            textResume = re.sub(r"(\r)|(\n)", " ", textResume)  # Removes Escape Characters \r and \n
+            textResume = re.sub(r"(\t)", "", textResume)  # Removes Escape Characters \t
+            textResume = re.sub(r"[^\x00-\x7f]", r" ", textResume)  # Removes Non-Ascii Characters
+            print(textResume)
 
-        # Scraping Data
-        splitResume = textResume.split()
+            # Scraping Data
+            splitResume = textResume.split()
 
-        # Name
-        applicantName = " ".join(splitResume[:2]).lower().title()
+            # Name
+            applicantName = " ".join(splitResume[:2]).lower().title()
 
-        # Email
-        try:
-            applicantEmail = splitResume[list(map(lambda word: True if "@" in word else False, splitResume)).index(True)]
-        except ValueError:
-            applicantEmail = "Not Found Automatically"
+            # Email
+            try:
+                applicantEmail = splitResume[
+                    list(map(lambda word: True if "@" in word else False, splitResume)).index(True)]
+            except ValueError:
+                applicantEmail = "Not Found Automatically"
 
-        # Phone Number
-        applicantNumber = "Not Found Automatically"
-        patterns = [
-            r'\+\d\s\d{3}\s\d{3}\s\d{4}',
-            r'\(\d{3}\)\s\d{3}\s\d{4}',
-            r'\d{10}',
-            r'\+\d\d{10}',
-            r'\(\d{3}\)-\d{3}-\d{4}',
-            r'\(\d{3}\)\s\d{3}-\d{4}',
-            r'\d{3}\s\d{3}\s\d{4}'
-            r'\d{3}-\d{3}-\d{4}',
-            r'\d{3}[-\s]?\d{3}[-\s]?\d{4}'
-            r'\(\d{3}\)\s-\d{3}-\d{4}'
-        ]
-        for pattern in patterns:
-            matches = re.findall(pattern, textResume)
-            if len(matches) != 0:
-                applicantNumber = matches[0]
-                break
+            # Phone Number
+            applicantNumber = "Not Found Automatically"
+            patterns = [
+                r'\+\d\s\d{3}\s\d{3}\s\d{4}',
+                r'\(\d{3}\)\s\d{3}\s\d{4}',
+                r'\d{10}',
+                r'\+\d\d{10}',
+                r'\(\d{3}\)-\d{3}-\d{4}',
+                r'\(\d{3}\)\s\d{3}-\d{4}',
+                r'\d{3}\s\d{3}\s\d{4}',
+                r'\d{3}-\d{3}-\d{4}',
+                r'\d{3}[-\s]?\d{3}[-\s]?\d{4}',
+                r'\(\d{3}\)\s-\d{3}-\d{4}',
+                r'\((\d{3})\)(\d{3})-(\d{4})'
+            ]
+            for pattern in patterns:
+                matches = re.findall(pattern, textResume)
+                if len(matches) != 0:
+                    applicantNumber = matches[0]
+                    break
+            
+            # Formatting Phone Numbers for Weird Edge Cases
+            if type(matches[0]) == "<class 'tuple'>" and len(matches[0][0]) == 3:
+                applicantNumber = "-".join(applicantNumber)
 
-        # Resume Summarizer
-        parser = PlaintextParser.from_string(textResume, Tokenizer("english"))
-        summarizer = LexRankSummarizer()
-        resumeSummary = summarizer(parser.document, sentences_count=7)
+            # Resume Summarizer
+            resumeSummary = summarize(textResume)
+            print(resumeSummary)
 
-        # PDF -> PICKLED BLOB
-        filePDF = pickle.dumps(pdfObject)
+            # PDF -> PICKLED BLOB
+            filePDF = pickle.dumps(pdf)
 
-        # Saving to Database
-        conn.execute("""
-            INSERT INTO candidates (
+            # Saving to Database
+            conn.execute("""
+                INSERT INTO candidates (
+                    applicantName,
+                    applicantEmail,
+                    applicantNumber,
+                    isLiked,
+                    applicantNotes,
+                    resumeText,
+                    resumeSummary,
+                    filePDF
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            """, (
                 applicantName,
                 applicantEmail,
                 applicantNumber,
-                isLiked,
-                applicantNotes,
-                resumeText,
-                resumeSummary,
-                filePDF
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-        """, (
-            applicantName,
-            applicantEmail,
-            applicantNumber,
-            0,
-            "",
-            textResume,
-            str(resumeSummary[0]),
-            filePDF,
-        ))
-        conn.commit()
+                0,
+                "",
+                textResume,
+                str(resumeSummary),
+                filePDF,
+            ))
+            conn.commit()
 
-        print(textResume)
-        return {
-            "applicantName": elimNonLatin(applicantName),
-            "applicantEmail": elimNonLatin(applicantEmail),
-            "applicantNumber": elimNonLatin(applicantNumber),
-            "resumeSummary": elimNonLatin(str(resumeSummary[0])),
-            "resumeText": elimNonLatin(str(textResume))
-        }, 200
+            cursor.execute("SELECT MAX(applicantID) FROM candidates")
+            applicantID = cursor.fetchone()[0]
+
+            return {
+                "applicantID": applicantID,
+                "applicantName": elimNonLatin(applicantName),
+                "applicantEmail": elimNonLatin(applicantEmail),
+                "applicantNumber": elimNonLatin(applicantNumber),
+                "resumeSummary": elimNonLatin(str(resumeSummary)),
+                "resumeText": elimNonLatin(str(textResume))
+            }, 200
+        return 200
+
 
 class Test(Resource):
     def post(self):
-        return {"hi":"h"}
+        return {"hi": "h"}
 
-api.add_resource(Notes, "/note/<int:applicantID>")
-api.add_resource(Like, "/like/<int:applicantID>")
+api.add_resource(Search, "/search/")
+api.add_resource(Notes, "/note/<int:applicantID>/")
+api.add_resource(Like, "/like/<int:applicantID>/")
 api.add_resource(Resume, "/resume/")
 api.add_resource(Test, "/test/")
 

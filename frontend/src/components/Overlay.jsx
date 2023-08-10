@@ -49,7 +49,7 @@ const Overlay = ({
   handleSim,
 }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-10">
       <div className="text-secondary text-2xl font-bold content bg-white rounded-lg p-2 relative">
         <h2 className="text-primary underline">Settings Page</h2>
         <FaTimes

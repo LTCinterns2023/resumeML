@@ -16,9 +16,12 @@ const UploadPanel = ({ files, onFileDelete }) => {
       ref={panelRef} // Set the ref on the div container
       className="animate-slideleft rounded-lg scroll-box h-48 overflow-y-auto p-4 border border-gray-400 bg-gray-100 flex align-end flex-col content"
     >
-      <h2 className="text-left text-primary font-bold">
-        Displaying The Following Resumes
-      </h2>
+      <div className="flex flex-row ">
+        <h2 className="text-left text-primary font-bold">
+          Displaying The Following Resumes
+        </h2>
+      </div>
+
 
       {files.length !== 0 &&
         files.map((fileObject, index) => {

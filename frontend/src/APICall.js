@@ -3,26 +3,47 @@ const baseURL = "http://127.0.0.1:49152/";
 const postResume = async (filePDF) => {
 	let formData = new FormData();
 	formData.append("pdf", filePDF);
-  
-	try {
-	  const response = await fetch(baseURL + "resume/", {
-		method: "POST",
-		body: formData,
-	  });
-  
-	  if (!response.ok) {
-		  throw new Error("Network response was not ok");
-	  }
-  
-	  const data = await response.json();
-	  console.log(data); 
-	  return data;
 
+	try {
+		const response = await fetch(baseURL + "resume/", {
+			method: "POST",
+			body: formData,
+		});
+
+		if (!response.ok) {
+			throw new Error("Network response was not ok");
+		}
+
+		const data = await response.json();
+		console.log(data);
+		return data;
 	} catch (error) {
-	  console.error("Fetch error:", error);
-	  throw error; // Rethrow the error to handle it higher up if needed
+		console.error("Fetch error:", error);
+		throw error;
 	}
-  };
-  
-  export default postResume;
-  
+};
+
+const getSearch = async (keywords) => {
+	let formData = new FormData();
+	formData.append("searchTerm", keywords);
+
+	try {
+		console.log("hello world")
+		const response = await fetch(baseURL + "search/", {
+			method: "GET",
+			body: formData,
+		});
+		if (!response.ok) {
+			throw new Error("Network response was not ok");
+		}
+
+		const data = await response.json();
+		console.log(data);
+		return data;
+	} catch (error) {
+		console.error("Fetch error:", error);
+		throw error; // Rethrow the error to handle it higher up if needed
+	}
+};
+export { postResume, getSearch };
+export default baseURL;
