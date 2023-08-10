@@ -175,3 +175,5 @@ config.json
 .build/
 node_modules
 **ipc-test
+
+database.db

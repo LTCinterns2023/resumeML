@@ -24,3 +24,6 @@ API_Key.js
 *.njsproj
 *.sln
 *.sw?
+
+database.db
+backend/database.db
