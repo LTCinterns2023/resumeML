@@ -34,7 +34,7 @@ const ResumeCard = ({
     };
 
     fetchData();
-  }, [fileObject.file]); // Run effect when fileObject.file changes
+  }, [index]); // Run effect when fileObject.file changes
 
   if (file.type !== "application/pdf") {
     return <></>;

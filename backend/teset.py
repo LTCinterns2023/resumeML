@@ -1,2 +1,3 @@
-hi = (1, 3, 4)
-print(type(hi))
+a = "I love to eat cheesel"
+
+print("cheese" in a )

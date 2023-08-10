@@ -106,23 +106,25 @@ def elimNonLatin(text):
 
 # API Resources
 class Search(Resource):
-    def get(self):
-        searchTerms = search_get_args.parse_args()
-        conn.execute(f"""
-            SELECT applicantID, resumeText FROM candidates
+    def get(self, searchTerms):
+        searchTerms = list(map(lambda x: x.lower(), searchTerms.split(",")))
+        cursor.execute(f"""
+            SELECT applicantID, resumeText FROM candidates;
         """)
-        rows = cursor.fetchAll()
+        rows = cursor.fetchall()
 
-        validResumes = []
+        invalidResumes = []
+
         for row in rows:
-            validResumes.append(row[0])
             for term in searchTerms:
-                if term not in row[1]:
-                    validResumes.pop()
-                    break
+                pattern = re.compile(r'\b' + re.escape(term) + r'\b', re.IGNORECASE)
                 
-        # ONLY VALID RESUMES GET THEIR ID RETURNED
-        return {"validIDs": validResumes}, 200
+                if len(pattern.findall(row[1])) <= 0:
+                    invalidResumes.append(row[0])
+                    
+                
+        # ONLY INVALID RESUMES GET THEIR ID RETURNED
+        return {"invalidIDs": invalidResumes}, 200
 
 
 class Notes(Resource):
@@ -327,7 +329,7 @@ class Test(Resource):
     def post(self):
         return {"hi": "h"}
 
-api.add_resource(Search, "/search/")
+api.add_resource(Search, "/search/<string:searchTerms>/")
 api.add_resource(Notes, "/note/<int:applicantID>/")
 api.add_resource(Like, "/like/<int:applicantID>/")
 api.add_resource(Resume, "/resume/")

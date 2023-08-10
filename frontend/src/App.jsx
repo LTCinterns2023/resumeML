@@ -18,7 +18,7 @@ import {
   deleteKeyword,
 } from "./Functions";
 import { FaHeart } from "react-icons/fa";
-import getSearch from "./APICall"
+import { getSearch } from "./APICall"
 
 const App = () => {
   // File Submission
@@ -49,7 +49,7 @@ const App = () => {
   const [currentKeyword, setCurrentKeyword] = useState("");
 
   const handleKeywordChange = (event) => {
-    setCurrentKeyword(event.target.value);
+    setCurrentKeyword(event.target.value.replace("|", ""));
   };
 
   const handleKeywordSubmit = (event) => {
@@ -65,11 +65,9 @@ const App = () => {
     console.log("Search query:", keywords);
     const fetchSearch = async () => {
       try {
-        console.log("HIII");
         const response = await getSearch(keywords);
         // All Those That Pass The Filter Have Their ID In Response
         setFilesUpload(filesUpload.filter((file) => response.validIDs.includes(file.applicantID))); 
-    
       } catch (error) {
         console.log("Server Error");
       }

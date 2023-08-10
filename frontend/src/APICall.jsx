@@ -1,6 +1,6 @@
 const baseURL = "http://127.0.0.1:49152/";
 
-const postResume = async (filePDF) => {
+async function postResume (filePDF) {
 	let formData = new FormData();
 	formData.append("pdf", filePDF);
 
@@ -23,15 +23,11 @@ const postResume = async (filePDF) => {
 	}
 };
 
-const getSearch = async (keywords) => {
-	let formData = new FormData();
-	formData.append("searchTerm", keywords);
-
+async function getSearch (keywords) {
 	try {
 		console.log("hello world")
-		const response = await fetch(baseURL + "search/", {
+		const response = await fetch(baseURL + "search/" + keywords.map((keyword, index) => keyword) + "/", {
 			method: "GET",
-			body: formData,
 		});
 		if (!response.ok) {
 			throw new Error("Network response was not ok");
@@ -46,4 +42,3 @@ const getSearch = async (keywords) => {
 	}
 };
 export { postResume, getSearch };
-export default baseURL;
