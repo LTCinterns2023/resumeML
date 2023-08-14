@@ -2,16 +2,22 @@ import nltk
 from sentence_transformers import SentenceTransformer, util
 from modelCNN import Model
 import numpy as np
-import LexRank
+from lexrank import LexRank
 from LexRank import degree_centrality_scores
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
-document = Model.initializeResumes()
+lx = LexRank(stopwords=["en"])
 
-sentences = nltk.sent_tokenize(document)
-print("Num sentences:", len(sentences))
-embeddings = model.encode(sentences, convert_to_tensor=True)
-cos_scores = util.cos_sim(embeddings, embeddings).numpy()
-centrality_scores = degree_centrality_scores(cos_scores, threshold=None)
-most_central_sentence_indices = np.argsort(-centrality_scores)
+
+def summarize(document):
+    document = Model.initializeResumes()
+    for text in document:
+        sentences = nltk.sent_tokenize(document)
+        embeddings = model.encode(sentences, convert_to_tensor=True) 
+
+    summary = lx.get_summary(embeddings, summary_size=5, threshold=.2)
+    return summary
+
+if __name__ == "__main__":
+    print(summarize())
