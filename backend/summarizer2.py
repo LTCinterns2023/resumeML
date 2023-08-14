@@ -12,10 +12,8 @@ lx = LexRank(stopwords=["en"])
 
 def summarize(document):
     document = Model.initializeResumes()
-    for text in document:
-        sentences = nltk.sent_tokenize(document)
-        embeddings = model.encode(sentences, convert_to_tensor=True) 
-
+    sentences = nltk.sent_tokenize(document)
+    embeddings = model.encode(sentences, convert_to_tensor=True) 
     summary = lx.get_summary(embeddings, summary_size=5, threshold=.2)
     return summary
 
