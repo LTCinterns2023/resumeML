@@ -108,23 +108,19 @@ def elimNonLatin(text):
 class Search(Resource):
     def get(self, searchTerms):
         searchTerms = list(map(lambda x: x.lower(), searchTerms.split(",")))
-        cursor.execute(f"""
-            SELECT applicantID, resumeText FROM candidates;
-        """)
+        cursor.execute("SELECT applicantID, resumeText FROM candidates;")
         rows = cursor.fetchall()
 
-        invalidResumes = []
+        validResumes = []
 
         for row in rows:
-            for term in searchTerms:
-                pattern = re.compile(r'\b' + re.escape(term) + r'\b', re.IGNORECASE)
-                
-                if len(pattern.findall(row[1])) <= 0:
-                    invalidResumes.append(row[0])
-                    
-                
-        # ONLY INVALID RESUMES GET THEIR ID RETURNED
-        return {"invalidIDs": invalidResumes}, 200
+            resume_text = row[1].lower()
+            has_search_term = any(term in resume_text for term in searchTerms)
+            
+            if has_search_term:
+                validResumes.append(row[0])
+
+        return {"validIDs": validResumes}, 200
 
 
 class Notes(Resource):
