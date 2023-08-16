@@ -20,8 +20,6 @@ def summarize(document):
             uncleanedText = re.sub("&", "and", uncleanedText)  # Replaces & With and
             uncleanedText = re.sub("\s+", " ", uncleanedText)  # Remove Extra Whitespace
             uncleanedText = re.sub(r"[^\x00-\x7f]", r" ", uncleanedText)  # Removes Non-Ascii Characters
-            uncleanedText = re.sub('[%s]' % re.escape("""!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""), "",
-                                   uncleanedText)  # remove punctuations
             return uncleanedText.lower()  # Lowercase everything
     
     rawText = cleanData(document)
@@ -31,4 +29,4 @@ def summarize(document):
     return summary
 
 if __name__ == "__main__":
-    print(summarize())
+    print(summarize([]))
