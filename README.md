@@ -1,29 +1,6 @@
 ## ResumeML
 
-Welcome to the ResumeML repository, please take a look at [/backend](https://github.com/LTCinterns2023/resumeML/tree/main/frontend) and [/frontend](https://github.com/LTCinterns2023/resumeML/tree/main/backend)
-
-# To-do List for Frontend
-- [x] Host a website (possibly on Github) - Suyeon
-- [ ] Change icon/title - Namira
-- [x] Components - Suyeon
-- [ ] Font & Style (css) - Ruth
-- [ ] "Rank by" button - Mai
-- [x] "Upload" button - Mai
-- [ ] "Location" search bar - Namirawsa
-- [x] Make containers in <main> for showcasing applicants' info - Ruth
-- [ ] <b>Connect containers with database</b>
-- [ ] Apply the API of AI to a ranking system
-
-# To-do List for Backend
-- [x] Add: Instructions for the backend
-- [ ] Word to vectorization - Suyeon
-- [x] <b>Database - Suyeon, Affan, Ethan, Burak</b>
-- [ ] Connect frontend with backend
-- [ ] Develop a search engine (filter texts in resumes) - Burak
-- [ ] Summary of Application
-
-...
-
+Welcome to the ResumeML repository, please take a look at [/frontend](https://github.com/LTCinterns2023/resumeML/tree/main/frontend) and [/backend](https://github.com/LTCinterns2023/resumeML/tree/main/backend)
 
 ## Using cli.js
 
