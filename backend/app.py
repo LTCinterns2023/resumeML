@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_restful import Api, Resource, reqparse, fields, marshal_with
 
 import sqlite3 as sql
-import PyPDF2
 from modelCNN import Model
 import re
 import pickle
