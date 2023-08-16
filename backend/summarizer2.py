@@ -3,11 +3,9 @@ from sentence_transformers import SentenceTransformer
 from lexrank import LexRank
 import re
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
-
-lx = LexRank(stopwords=["en"])
-
 def summarize(document):
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    lx = LexRank(stopwords=["en"])
 
     def cleanData(uncleanedText):
             uncleanedText = re.sub(r"\b(\d{3})[-.]?(\d{3})[-.]?(\d{4})\b", "", uncleanedText)  # Removes Phone Number
@@ -20,12 +18,14 @@ def summarize(document):
             uncleanedText = re.sub("&", "and", uncleanedText)  # Replaces & With and
             uncleanedText = re.sub("\s+", " ", uncleanedText)  # Remove Extra Whitespace
             uncleanedText = re.sub(r"[^\x00-\x7f]", r" ", uncleanedText)  # Removes Non-Ascii Characters
+
             return uncleanedText.lower()  # Lowercase everything
     
     rawText = cleanData(document)
     sentences = nltk.sent_tokenize(rawText)
     embeddings = model.encode(sentences, convert_to_tensor=True) 
     summary = lx.get_summary(embeddings, summary_size=5, threshold=.2)
+
     return summary
 
 if __name__ == "__main__":
