@@ -7,6 +7,7 @@ from modelCNN import Model
 import re
 import pickle
 import pdfplumber
+import PyPDF2
 from summarizer import summarize
 import atexit
 from commands import nuke
@@ -107,7 +108,9 @@ def elimNonLatin(text):
 class Search(Resource):
     def get(self, searchTerms):
         searchTerms = list(map(lambda x: x.lower(), searchTerms.split(",")))
-        cursor.execute("SELECT applicantID, resumeText FROM candidates;")
+        cursor.execute(f"""
+            SELECT applicantID, resumeText FROM candidates;
+        """)
         rows = cursor.fetchall()
 
         validResumes = []
