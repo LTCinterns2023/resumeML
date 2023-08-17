@@ -4,7 +4,7 @@ Welcome to the ResumeML repository, please take a look at [/frontend](https://gi
 
  
 
-Site: [ResumeML](https://resumeml.netlify.app/) [![Netlify Status](https://api.netlify.com/api/v1/badges/4dfb082e-71cc-4434-9d7f-ae618c7f1b3c/deploy-status)](https://app.netlify.com/sites/resumeml/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4dfb082e-71cc-4434-9d7f-ae618c7f1b3c/deploy-status)](https://app.netlify.com/sites/resumeml/deploys) [ResumeML](https://resumeml.netlify.app/) 
 
 
 ## Using cli.js
