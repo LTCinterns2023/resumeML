@@ -2,6 +2,10 @@
 
 Welcome to the ResumeML repository, please take a look at [/frontend](https://github.com/LTCinterns2023/resumeML/tree/main/frontend) and [/backend](https://github.com/LTCinterns2023/resumeML/tree/main/backend)
 
+
+Site: [ResumeML](https://resumeml.netlify.app/)
+Status: [![Netlify Status](https://api.netlify.com/api/v1/badges/4dfb082e-71cc-4434-9d7f-ae618c7f1b3c/deploy-status)](https://app.netlify.com/sites/resumeml/deploys)
+
 ## Using cli.js
 
 To run both the front and back end servers, please run: 
